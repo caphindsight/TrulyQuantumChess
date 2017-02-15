@@ -1,10 +1,12 @@
-#[derive(Copy, Clone, Eq, PartialEq)]
+use std;
+
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Player {
     WHITE,
     BLACK,
 }
 
-#[derive(Copy, Clone, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Piece {
     EMPTY,
     PAWN,
@@ -17,8 +19,8 @@ pub enum Piece {
 
 #[derive(Copy, Clone, Eq, PartialEq)]
 pub struct Square {
-    player: Player,
-    piece: Piece,
+    pub player: Player,
+    pub piece: Piece,
 }
 
 impl Square {
@@ -42,6 +44,21 @@ impl Clone for Chessboard {
         }
         Chessboard {squares: new_squares}
     }
+}
+
+/// Represents a chess move
+pub struct ChessMove {
+    pub player: Player,
+    pub source_position: (isize, isize),
+    pub target_position: (isize, isize),
+    pub piece: Piece,
+    pub target_piece: Piece,  // Piece::EMPTY for non-take moves
+}
+
+/// Represents a result of the chess move
+pub enum ChessMoveResult {
+    Success,
+    Failure(String),
 }
 
 
@@ -81,32 +98,120 @@ impl Chessboard {
         board
     }
 
-    fn validate_coord(coord: usize) {
-        if coord >= 8 {
+    fn validate_coord(coord: isize) {
+        if coord < 0 || coord >= 8 {
             panic!("Chessboard coordinate out of range: {}", &coord);
         }
     }
 
-    pub fn index(x: usize, y: usize) -> usize {
+    pub fn index(x: isize, y: isize) -> usize {
         Chessboard::validate_coord(x);
         Chessboard::validate_coord(y);
-        y * 8 + x
+        (y * 8 + x) as usize
     }
 
-    pub fn unindex(ind: usize) -> (usize, usize) {
+    pub fn unindex(ind: usize) -> (isize, isize) {
         if ind >= 64 {
             panic!("Chessboard index out of range: {}", &ind);
         }
-        (ind % 8, ind / 8)
+        ((ind % 8) as isize, (ind / 8) as isize)
     }
 
-    pub fn get(&self, x: usize, y: usize) -> Square {
+    pub fn get(&self, x: isize, y: isize) -> Square {
         let ind = Chessboard::index(x, y);
         self.squares[ind]
     }
 
-    pub fn set(&mut self, x: usize, y: usize, square: Square) {
+    pub fn set(&mut self, x: isize, y: isize, square: Square) {
         let ind = Chessboard::index(x, y);
         self.squares[ind] = square;
+    }
+
+    /// Checks whether a specified move is allowed by rules of ordinary chess.
+    pub fn allowed(&self, mv: &ChessMove) -> bool {
+        let (sx, sy) = mv.source_position;
+        let (tx, ty) = mv.target_position;
+
+        if sx == tx && sy == ty {
+            return false;
+        }
+
+        let dx = tx - sx;
+        let dx_abs = dx.abs();
+        let dx_sig = dx.signum();
+        let dy = ty - sy;
+        let dy_abs = dy.abs();
+        let dy_sig = dy.signum();
+
+        match mv.piece {
+            Piece::EMPTY => { panic!("You can't make a move with an empty piece!"); },
+            Piece::PAWN => {
+                if mv.target_piece == Piece::EMPTY {
+                    sx == tx && (sy + 1 == ty || sy == 1 && ty == 3 && !self.get(sx, 2).is_occupied())
+                } else {
+                    (sx == tx + 1 || sx + 1 == tx) && (sy + 1 == ty)
+                }
+            },
+            Piece::KNIGHT => {
+                dx_abs == 1 && dy_abs == 2 || dx_abs == 2 && dy_abs == 1
+            },
+            Piece::BISHOP => {
+                if dx_abs == dy_abs {
+                    for i in 1..dx_abs {
+                        if self.get(sx + i * dx_sig, sy + i * dy_sig).is_occupied() {
+                            return false;
+                        }
+                    }
+                    true
+                } else {
+                    false
+                }
+            },
+            Piece::ROOK => {
+                if dx == 0 || dy == 0 {
+                    let dd = std::cmp::max(dx_abs, dy_abs);
+                    for i in 1..dd {
+                        if self.get(sx + i * dx_sig, sy + i * dy_sig).is_occupied() {
+                            return false;
+                        }
+                    }
+                    true
+                } else {
+                    false
+                }
+            },
+            Piece::QUEEN => {
+                if dx == 0 || dy == 0 {
+                    let dd = std::cmp::max(dx_abs, dy_abs);
+                    for i in 1..dd {
+                        if self.get(sx + i * dx_sig, sy + i * dy_sig).is_occupied() {
+                            return false;
+                        }
+                    }
+                    true
+                } else if dx_abs == dy_abs {
+                    for i in 1..dx_abs {
+                        if self.get(sx + i * dx_sig, sy + i * dy_sig).is_occupied() {
+                            return false;
+                        }
+                    }
+                    true
+                } else {
+                    false
+                }
+            },
+            Piece::KING => {
+                (dx_abs == 0 || dx_abs == 1) && (dy_abs == 0 || dy_abs == 1)
+            }
+        }
+    }
+
+    /// Will happily apply a move disallowed by the rules of the game. Be careful!
+    /// Ideally one should only call this after checking that `self.allowed(mv) == true`.
+    pub fn apply(&mut self, mv: &ChessMove) {
+        let (sx, sy) = mv.source_position;
+        let (tx, ty) = mv.target_position;
+        self.set(tx, ty, Square {player: mv.player, piece: mv.piece});
+        self.set(sx, sy, EMPTY_SQUARE);
     }
 }

@@ -29,7 +29,6 @@ pub struct QuantumSquareInfo {
 }
 
 
-
 impl QuantumChessboard {
     /// Removes harmonics with vanishing amplitudes from the list.
     pub fn clean_vanishing(&mut self) {
@@ -53,7 +52,7 @@ impl QuantumChessboard {
     /// one piece is allowed to occupy the square. This function
     /// returns the piece that maybe occupies square, together with
     /// the current probability of it.
-    pub fn get_quantum_square_info(&self, x: usize, y: usize) -> QuantumSquareInfo {
+    pub fn get_quantum_square_info(&self, x: isize, y: isize) -> QuantumSquareInfo {
         let mut res: Option<Square> = None;
         let mut ampl = Comp::new(0.0, 0.0);
         let mut total = Comp::new(0.0, 0.0);
@@ -64,7 +63,7 @@ impl QuantumChessboard {
                 ampl = ampl + harmonic.ampl;
                 if let Some(expected_sq) = res {
                     if current_sq != expected_sq {
-                        panic!("Inconsistent quantum board: square ({}, {}) is in the superposition of pieces!", x, y);
+                        panic!("Inconsistent quantum chessboard: square ({}, {}) is in the superposition of pieces!", x, y);
                     }
                 }
                 res = Some(current_sq.clone());
