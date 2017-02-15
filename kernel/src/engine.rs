@@ -5,6 +5,7 @@
 // of Quantum Chess is implemented.
 
 use chess::*;
+use quantize::*;
 
 /// Represents a chess move
 pub struct ChessMove {
@@ -31,4 +32,41 @@ pub trait ChessEngine {
 /// quantum chess moves
 pub trait QuantumChessEngine: ChessEngine {
     fn submit_quantum_move(&mut self, mv: &ChessMove) -> ChessMoveResult;
+}
+
+pub struct QuantumChessEngineImpl {
+    player: Player,
+    state: QuantumChessboard,
+}
+
+impl QuantumChessEngineImpl {
+    pub fn new() -> QuantumChessEngineImpl {
+        QuantumChessEngineImpl {
+            player: Player::WHITE,
+            state: QuantumChessboard {
+                harmonics: vec![
+                    QuantumHarmonic {
+                        board: Chessboard::new_starting(),
+                        ampl: Comp::new(1.0, 0.0),
+                    }
+                ]
+            }
+        }
+    }
+
+    pub fn get_quantum_chessboard(&self) -> QuantumChessboard {
+        self.state.clone()
+    }
+}
+
+impl ChessEngine for QuantumChessEngineImpl {
+    fn submit_move(&mut self, mv: &ChessMove) -> ChessMoveResult {
+        panic!("Not implemented yet");
+    }
+}
+
+impl QuantumChessEngine for QuantumChessEngineImpl {
+    fn submit_quantum_move(&mut self, mv: &ChessMove) -> ChessMoveResult {
+        panic!("Not implemented yet");
+    }
 }

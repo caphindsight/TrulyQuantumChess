@@ -28,6 +28,16 @@ pub struct Chessboard {
     squares: [Square; 64],
 }
 
+impl Clone for Chessboard {
+    fn clone(&self) -> Chessboard {
+        let mut new_squares = [EMPTY_SQUARE; 64];
+        for i in 0..64 {
+            new_squares[i] = self.squares[i];
+        }
+        Chessboard {squares: new_squares}
+    }
+}
+
 
 impl Chessboard {
     pub fn new_empty() -> Chessboard {
