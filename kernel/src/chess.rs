@@ -21,6 +21,12 @@ pub struct Square {
     piece: Piece,
 }
 
+impl Square {
+    pub fn is_occupied(&self) -> bool {
+        self.piece != Piece::EMPTY
+    }
+}
+
 pub const EMPTY_SQUARE: Square = Square {player: Player::WHITE, piece: Piece::EMPTY};
 
 /// Represents the state of the chessboard
