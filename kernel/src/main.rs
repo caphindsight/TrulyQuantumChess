@@ -1,6 +1,6 @@
 extern crate num;
 extern crate rand;
-#[macro_use] extern crate text_io;
+extern crate regex;
 
 mod chess;
 mod engine;
@@ -9,31 +9,37 @@ mod console_io;
 
 fn main() {
     let mut eng = engine::QuantumChessEngine::new();
-
     let mut show_board = true;
 
     loop {
         let qb = eng.get_quantum_chessboard();
-        assert!(qb.harmonics.len() == 1, "Multiple harmonics?!");
 
         if show_board {
-            let board = qb.harmonics[0].board.clone();
-            console_io::output::display_chessboard(&board);
+            for harmonic in &qb.harmonics {
+                console_io::output::display_chessboard(&harmonic.board);
+                println!("-- ampl={} --", harmonic.ampl);
+            }
         }
 
-        let mv = console_io::input::input_move();
-        // println!("{:?}", &mv);
-
-        let res = eng.submit_move(&mv);
-        match res {
-            chess::ChessMoveResult::Success => {
-                eng.player.switch();
-                show_board = true;
-            },
-            chess::ChessMoveResult::Failure(str) => {
-                println!("{}", &str);
+        match console_io::input::input_move() {
+            None => {
+                println!("Unable to parse your move, try again");
                 show_board = false;
             },
+            Some(m) => {
+                let res = eng.submit(&m);
+                match res {
+                    chess::ChessMoveResult::Success => {
+                        eng.player.switch();
+                        show_board = true;
+                    },
+                    chess::ChessMoveResult::Failure(str) => {
+                        println!("{}", &str);
+                        show_board = false;
+                    },
+                }
+
+            }
         }
     }
 }

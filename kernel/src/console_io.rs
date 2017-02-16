@@ -1,3 +1,4 @@
+use regex;
 use std;
 use chess::*;
 
@@ -45,32 +46,58 @@ pub mod output {
 pub mod input {
     use super::*;
 
-    fn parse_coords(a: &String) -> (isize, isize) {
+    fn parse_coords(a_str: &str) -> (isize, isize) {
+        let a = a_str.to_string();
         assert!(a.len() == 2, "Invalid coord format!");
         let x = (a.chars().nth(0).unwrap() as isize) - ('a' as isize);
         let y = (a.chars().nth(1).unwrap() as isize) - ('1' as isize);
         (x, y)
     }
 
-    pub fn input_move() -> ChessMove {
-        let player_str: String;
-        let piece_str: String;
-        let source_str: String;
-        let target_str: String;
-        let takes_str: String;
+    pub fn read_line() -> String {
+        use std::io::BufRead;
+        let res: String;
+        {
+            let stdin = std::io::stdin();
+            res = stdin.lock().lines().next().unwrap().unwrap().to_string();
+        }
+        res
+    }
 
-        // print!("your move: ");
-        // use std::io::Write;
-        // std::io::stdout().flush().unwrap();
-        scan!("{} {} {} -> {} takes {}\n", player_str, piece_str, source_str, target_str, takes_str);
+    pub fn input_move() -> Option<QuantumChessMove> {
+        let ordinary_re = regex::Regex::new(r"^(white|black) (pawn|knight|bishop|rook|queen|king) ([a-h][1-8]) -> ([a-h][1-8]) takes (nothing|pawn|knight|bishop|rook|queen|king)$").unwrap();
+        let quantum_re = regex::Regex::new(r"^(white|black) (pawn|knight|bishop|rook|queen|king) ([a-h][1-8]) -> ([a-h][1-8]) -> ([a-h][1-8])$").unwrap();
 
+        let line = read_line();
+        if ordinary_re.is_match(&line) {
+            let mut iter = ordinary_re.captures_iter(&line);
+            let cap = iter.next().unwrap();
+            match parse_ordinary_move(&cap[1], &cap[2], &cap[3], &cap[4], &cap[5]) {
+                None => None,
+                Some(m) => Some(QuantumChessMove::Ordinary(m)),
+            }
+        } else if quantum_re.is_match(&line) {
+            let mut iter = quantum_re.captures_iter(&line);
+            let cap = iter.next().unwrap();
+            match parse_quantum_move(&cap[1], &cap[2], &cap[3], &cap[4], &cap[5]) {
+                None => None,
+                Some(m) => Some(QuantumChessMove::Quantum(m)),
+            }
+        } else {
+            None
+        }
+    }
+
+    pub fn parse_ordinary_move(player_str: &str, piece_str: &str, source_str: &str,
+        target_str: &str, takes_str: &str) -> Option<ChessMove>
+    {
         let player: Player;
         if player_str == "white" {
             player = Player::WHITE;
         } else if player_str == "black" {
             player = Player::BLACK;
         } else {
-            panic!("Invalid player: {}!", &player_str);
+            return None;
         }
 
         let piece: Piece;
@@ -87,7 +114,7 @@ pub mod input {
         } else if (piece_str == "king") {
             piece = Piece::KING;
         } else {
-            panic!("Inalid piece: {}!", &piece_str);
+            return None;
         }
 
         let source_position = parse_coords(&source_str);
@@ -109,15 +136,57 @@ pub mod input {
         } else if (takes_str == "king") {
             target_piece = Piece::KING;
         } else {
-            panic!("Invalid target piece: {}!", &takes_str);
+            return None;
         }
 
-        ChessMove {
+        Some(ChessMove {
             player: player,
             source_position: source_position,
             target_position: target_position,
             piece: piece,
             target_piece: target_piece,
+        })
+    }
+
+    pub fn parse_quantum_move(player_str: &str, piece_str: &str, source_str: &str,
+        middle_str: &str, target_str: &str) -> Option<QuantumMove>
+    {
+        let player: Player;
+        if player_str == "white" {
+            player = Player::WHITE;
+        } else if player_str == "black" {
+            player = Player::BLACK;
+        } else {
+            return None;
         }
+
+        let piece: Piece;
+        if piece_str == "pawn" {
+            piece = Piece::PAWN;
+        } else if (piece_str == "knight") {
+            piece = Piece::KNIGHT;
+        } else if (piece_str == "bishop") {
+            piece = Piece::BISHOP;
+        } else if (piece_str == "rook") {
+            piece = Piece::ROOK;
+        } else if (piece_str == "queen") {
+            piece = Piece::QUEEN;
+        } else if (piece_str == "king") {
+            piece = Piece::KING;
+        } else {
+            return None;
+        }
+
+        let source_position = parse_coords(&source_str);
+        let middle_position = parse_coords(&middle_str);
+        let target_position = parse_coords(&target_str);
+
+        Some(QuantumMove {
+            player: player,
+            piece: piece,
+            source_position: source_position,
+            middle_position: middle_position,
+            target_position: target_position,
+        })
     }
 }

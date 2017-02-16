@@ -66,6 +66,29 @@ pub struct ChessMove {
     pub target_piece: Piece,  // Piece::EMPTY for non-take moves
 }
 
+impl ChessMove {
+    pub fn is_trivial(&self) -> bool {
+        self.source_position == self.target_position
+    }
+}
+
+/// Represents a quantum move
+#[derive(Debug)]
+pub struct QuantumMove {
+    pub player: Player,
+    pub source_position: (isize, isize),
+    pub middle_position: (isize, isize),
+    pub target_position: (isize, isize),
+    pub piece: Piece,
+}
+
+/// Represents any move player can make in quantum chess
+#[derive(Debug)]
+pub enum QuantumChessMove {
+    Ordinary(ChessMove),
+    Quantum(QuantumMove),
+}
+
 /// Represents a result of the chess move
 pub enum ChessMoveResult {
     Success,
