@@ -57,7 +57,7 @@ pub mod input {
         let source_str: String;
         let target_str: String;
         let takes_str: String;
-        scan!("{} {} {} -> {} takes {}", player_str, piece_str, source_str, target_str, takes_str);
+        scan!("{} {} {} -> {} takes {}\n", player_str, piece_str, source_str, target_str, takes_str);
 
         let player: Player;
         if player_str == "white" {
