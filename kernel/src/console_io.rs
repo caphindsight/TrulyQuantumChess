@@ -1,3 +1,4 @@
+use std;
 use chess::*;
 
 pub mod output {
@@ -57,6 +58,10 @@ pub mod input {
         let source_str: String;
         let target_str: String;
         let takes_str: String;
+
+        print!("your move: ");
+        use std::io::Write;
+        std::io::stdout().flush().unwrap();
         scan!("{} {} {} -> {} takes {}\n", player_str, piece_str, source_str, target_str, takes_str);
 
         let player: Player;
