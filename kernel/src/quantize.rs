@@ -43,7 +43,9 @@ pub mod measure {
         let mut rng = rand::thread_rng();
         use rand::distributions::IndependentSample;
         let probe = range.ind_sample(&mut rng);
-        probe <= probability
+        let res = probe <= probability;
+        println!("Measurement with probability {} rendered {}", probability, res);
+        res
     }
 }
 
