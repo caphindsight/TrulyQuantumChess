@@ -1,6 +1,7 @@
 use regex;
 use std;
 use chess::*;
+use quantize::*;
 
 pub mod output {
     use super::*;
@@ -32,16 +33,38 @@ pub mod output {
         }
     }
 
-    pub fn display_chessboard(board: &Chessboard) {
+    pub fn display_harmonics_horizontal(harmonics: &[QuantumHarmonic]) {
         for y in (0_isize..8_isize).rev() {
-            print!("{} ", y + 1);
-            for x in 0_isize..8_isize {
-                let square = board.get(x, y);
-                print!("{} ", square_char(square));
+            for harmonic in harmonics {
+                let board: &Chessboard = &harmonic.board;
+                print!("{} ", y + 1);
+                for x in 0_isize..8_isize {
+                    let square = board.get(x, y);
+                    print!("{} ", square_char(square));
+                }
+                print!("    ");
             }
             println!("");
         }
-        println!("  a b c d e f g h");
+        for harmonic in harmonics {
+            print!("  a b c d e f g h     ");
+        }
+        println!("");
+        for harmonic in harmonics {
+            print!("      A={}          ", harmonic.ampl);
+        }
+        println!("");
+    }
+
+    pub fn display_harmonics(harmonics: &[QuantumHarmonic], k: usize) {
+        let n = harmonics.len();
+        let u = (n + k - 1) / k;
+        for i in 0..u {
+            let start = i * k;
+            let fin = std::cmp::min(n, start + k);
+            display_harmonics_horizontal(&harmonics[start..fin]);
+            println!("");
+        }
     }
 }
 

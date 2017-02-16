@@ -15,11 +15,7 @@ fn main() {
         let qb = eng.get_quantum_chessboard();
 
         if show_board {
-            for harmonic in &qb.harmonics {
-                console_io::output::display_chessboard(&harmonic.board);
-                println!("-- ampl={} --", harmonic.ampl);
-                println!("");
-            }
+            console_io::output::display_harmonics(&qb.harmonics, 8);
         }
 
         println!("\n-------------------------\n");
