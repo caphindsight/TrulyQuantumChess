@@ -102,13 +102,13 @@ impl QuantumChessboard {
     /// the current probability of it.
     pub fn get_quantum_square_info(&self, x: isize, y: isize) -> QuantumSquareInfo {
         let mut res: Option<Square> = None;
-        let mut ampl = Comp::new(0.0, 0.0);
-        let mut total = Comp::new(0.0, 0.0);
+        let mut numerator: f64 = 0.0;
+        let mut denominator: f64 = 0.0;
         for harmonic in &self.harmonics {
-            total = total + harmonic.ampl;
+            denominator = denominator + harmonic.ampl.norm_sqr();
             let current_sq = harmonic.board.get(x, y);
             if current_sq.is_occupied() {
-                ampl = ampl + harmonic.ampl;
+                numerator = numerator + harmonic.ampl.norm_sqr();
                 if let Some(expected_sq) = res {
                     if current_sq != expected_sq {
                         panic!("Inconsistent quantum chessboard: square ({}, {}) is in the superposition of pieces!", x, y);
@@ -120,7 +120,7 @@ impl QuantumChessboard {
         match res {
             Some(sq) => QuantumSquareInfo {
                 square: sq,
-                probability: ampl.norm_sqr() / total.norm_sqr(),
+                probability: numerator / denominator,
             },
             None => QuantumSquareInfo {
                 square: EMPTY_SQUARE,
