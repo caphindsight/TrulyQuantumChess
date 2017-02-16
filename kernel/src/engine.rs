@@ -20,7 +20,7 @@ pub trait QuantumChessEngine: ChessEngine {
 }
 
 pub struct QuantumChessEngineImpl {
-    player: Player,
+    pub player: Player,
     state: QuantumChessboard,
 }
 

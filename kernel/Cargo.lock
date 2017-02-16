@@ -3,6 +3,7 @@ name = "kernel"
 version = "0.1.0"
 dependencies = [
  "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
+ "text_io 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -89,6 +90,11 @@ name = "rustc-serialize"
 version = "0.3.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
+[[package]]
+name = "text_io"
+version = "0.1.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
 [metadata]
 "checksum libc 0.2.20 (registry+https://github.com/rust-lang/crates.io-index)" = "684f330624d8c3784fb9558ca46c4ce488073a8d22450415c5eb4f4cfb0d11b5"
 "checksum num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)" = "bde7c03b09e7c6a301ee81f6ddf66d7a28ec305699e3d3b056d2fc56470e3120"
@@ -100,3 +106,4 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum num-traits 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)" = "a16a42856a256b39c6d3484f097f6713e14feacd9bfb02290917904fae46c81c"
 "checksum rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)" = "022e0636ec2519ddae48154b028864bdce4eaf7d35226ab8e65c611be97b189d"
 "checksum rustc-serialize 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)" = "237546c689f20bb44980270c73c3b9edd0891c1be49cc1274406134a66d3957b"
+"checksum text_io 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)" = "b75be161aa28cc0d3b17510330876d8a9c41a8351e93805fa84c2aa3ef71c19a"

@@ -5,3 +5,4 @@ authors = ["hindsight"]
 
 [dependencies]
 num = "0.1.36"
+text_io = "0.1.5"

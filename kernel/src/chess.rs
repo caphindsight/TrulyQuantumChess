@@ -6,6 +6,16 @@ pub enum Player {
     BLACK,
 }
 
+impl Player {
+    pub fn switch(&mut self) {
+        if self == &Player::WHITE {
+            *self = Player::BLACK;
+        } else {
+            *self = Player::WHITE;
+        }
+    }
+}
+
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Piece {
     EMPTY,
@@ -47,6 +57,7 @@ impl Clone for Chessboard {
 }
 
 /// Represents a chess move
+#[derive(Debug)]
 pub struct ChessMove {
     pub player: Player,
     pub source_position: (isize, isize),
