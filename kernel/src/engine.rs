@@ -7,26 +7,14 @@
 use chess::*;
 use quantize::*;
 
-/// This simple trait provides basic interface into
-/// an object capable of handling chess moves
-pub trait ChessEngine {
-    fn submit_move(&mut self, mv: &ChessMove) -> ChessMoveResult;
-}
-
-/// Interface into an object capable of handling
-/// quantum chess moves
-pub trait QuantumChessEngine: ChessEngine {
-    fn submit_quantum_move(&mut self, mv: &ChessMove) -> ChessMoveResult;
-}
-
-pub struct QuantumChessEngineImpl {
+pub struct QuantumChessEngine {
     pub player: Player,
     state: QuantumChessboard,
 }
 
-impl QuantumChessEngineImpl {
-    pub fn new() -> QuantumChessEngineImpl {
-        QuantumChessEngineImpl {
+impl QuantumChessEngine {
+    pub fn new() -> QuantumChessEngine {
+        QuantumChessEngine {
             player: Player::WHITE,
             state: QuantumChessboard {
                 harmonics: vec![
@@ -44,8 +32,8 @@ impl QuantumChessEngineImpl {
     }
 }
 
-impl ChessEngine for QuantumChessEngineImpl {
-    fn submit_move(&mut self, mv: &ChessMove) -> ChessMoveResult {
+impl QuantumChessEngine {
+    pub fn submit_move(&mut self, mv: &ChessMove) -> ChessMoveResult {
         if self.player != mv.player {
             return ChessMoveResult::Failure(
                 format!("Invalid player; expected {:?}, got {:?}!", self.player, mv.player)
@@ -175,9 +163,7 @@ impl ChessEngine for QuantumChessEngineImpl {
             )
         }
     }
-}
 
-impl QuantumChessEngine for QuantumChessEngineImpl {
     fn submit_quantum_move(&mut self, mv: &ChessMove) -> ChessMoveResult {
         panic!("Not implemented yet");
     }

@@ -8,7 +8,7 @@ mod quantize;
 mod console_io;
 
 fn main() {
-    let mut eng = engine::QuantumChessEngineImpl::new();
+    let mut eng = engine::QuantumChessEngine::new();
 
     let mut show_board = true;
 
@@ -24,7 +24,6 @@ fn main() {
         let mv = console_io::input::input_move();
         // println!("{:?}", &mv);
 
-        use engine::ChessEngine;
         let res = eng.submit_move(&mv);
         match res {
             chess::ChessMoveResult::Success => {
