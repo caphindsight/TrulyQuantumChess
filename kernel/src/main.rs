@@ -18,9 +18,11 @@ fn main() {
             for harmonic in &qb.harmonics {
                 console_io::output::display_chessboard(&harmonic.board);
                 println!("-- ampl={} --", harmonic.ampl);
+                println!("");
             }
         }
 
+        println!("\n-------------------------\n");
         match console_io::input::input_move() {
             None => {
                 println!("Unable to parse your move, try again");

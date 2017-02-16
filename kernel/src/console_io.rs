@@ -9,7 +9,7 @@ pub mod output {
         match square.player {
             Player::WHITE => {
                 match square.piece {
-                    Piece::EMPTY => {' '},
+                    Piece::EMPTY => {'.'},
                     Piece::PAWN => {'\u{2659}'},
                     Piece::KNIGHT => {'\u{2658}'},
                     Piece::BISHOP => {'\u{2657}'},
@@ -20,7 +20,7 @@ pub mod output {
             },
             Player::BLACK => {
                 match square.piece {
-                    Piece::EMPTY => {' '},
+                    Piece::EMPTY => {'.'},
                     Piece::PAWN => {'\u{265F}'},
                     Piece::KNIGHT => {'\u{265E}'},
                     Piece::BISHOP => {'\u{265D}'},
@@ -34,12 +34,14 @@ pub mod output {
 
     pub fn display_chessboard(board: &Chessboard) {
         for y in (0_isize..8_isize).rev() {
+            print!("{} ", y + 1);
             for x in 0_isize..8_isize {
                 let square = board.get(x, y);
                 print!("{} ", square_char(square));
             }
             println!("");
         }
+        println!("  a b c d e f g h");
     }
 }
 
