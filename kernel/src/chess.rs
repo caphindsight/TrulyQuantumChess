@@ -157,10 +157,21 @@ impl Chessboard {
         match mv.piece {
             Piece::EMPTY => { panic!("You can't make a move with an empty piece!"); },
             Piece::PAWN => {
-                if mv.target_piece == Piece::EMPTY {
-                    sx == tx && (sy + 1 == ty || sy == 1 && ty == 3 && !self.get(sx, 2).is_occupied())
-                } else {
-                    (sx == tx + 1 || sx + 1 == tx) && (sy + 1 == ty)
+                match mv.player {
+                    Player::WHITE => {
+                        if mv.target_piece == Piece::EMPTY {
+                            sx == tx && (sy + 1 == ty || sy == 1 && ty == 3 && !self.get(sx, 2).is_occupied())
+                        } else {
+                            (sx == tx + 1 || sx + 1 == tx) && (sy + 1 == ty)
+                        }
+                    },
+                    Player::BLACK => {
+                        if mv.target_piece == Piece::EMPTY {
+                            sx == tx && (sy == ty + 1 || sy == 6 && ty == 4 && !self.get(sx, 5).is_occupied())
+                        } else {
+                            (sx == tx + 1 || sx + 1 == tx) && (sy == ty + 1)
+                        }
+                    }
                 }
             },
             Piece::KNIGHT => {
