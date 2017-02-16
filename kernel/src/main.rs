@@ -1,4 +1,5 @@
 extern crate num;
+extern crate rand;
 #[macro_use] extern crate text_io;
 
 mod chess;

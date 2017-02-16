@@ -59,9 +59,9 @@ pub mod input {
         let target_str: String;
         let takes_str: String;
 
-        print!("your move: ");
-        use std::io::Write;
-        std::io::stdout().flush().unwrap();
+        // print!("your move: ");
+        // use std::io::Write;
+        // std::io::stdout().flush().unwrap();
         scan!("{} {} {} -> {} takes {}\n", player_str, piece_str, source_str, target_str, takes_str);
 
         let player: Player;

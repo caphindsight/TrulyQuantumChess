@@ -3,6 +3,7 @@ name = "kernel"
 version = "0.1.0"
 dependencies = [
  "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "text_io 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
