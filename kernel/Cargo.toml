@@ -1,9 +1,0 @@
-[package]
-name = "kernel"
-version = "0.1.0"
-authors = ["hindsight"]
-
-[dependencies]
-num = "0.1.36"
-rand = "0.3"
-regex = "0.2"

@@ -1,0 +1,9 @@
+[package]
+name = "vanilla"
+description = "Vanilla (command-line) app for the quantum chess engine"
+version = "0.1.0"
+authors = ["hindsight"]
+
+[dependencies]
+regex = "0.2"
+engine = { path = "../engine" }

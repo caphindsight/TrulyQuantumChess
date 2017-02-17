@@ -1,14 +1,14 @@
-extern crate num;
-extern crate rand;
 extern crate regex;
 
-mod chess;
-mod engine;
-mod quantize;
+extern crate engine;
+use engine::chess::*;
+use engine::quantize::*;
+use engine::engine::*;
+
 mod console_io;
 
 fn main() {
-    let mut eng = engine::QuantumChessEngine::new();
+    let mut eng = QuantumChessEngine::new();
     let mut show_board = true;
 
     loop {
@@ -27,16 +27,15 @@ fn main() {
             Some(m) => {
                 let res = eng.submit(&m);
                 match res {
-                    chess::ChessMoveResult::Success => {
+                    ChessMoveResult::Success => {
                         eng.player.switch();
                         show_board = true;
                     },
-                    chess::ChessMoveResult::Failure(str) => {
+                    ChessMoveResult::Failure(str) => {
                         println!("{}", &str);
                         show_board = false;
                     },
                 }
-
             }
         }
     }

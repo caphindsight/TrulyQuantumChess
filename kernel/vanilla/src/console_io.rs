@@ -1,7 +1,7 @@
 use regex;
 use std;
-use chess::*;
-use quantize::*;
+use engine::chess::*;
+use engine::quantize::*;
 
 pub mod output {
     use super::*;
