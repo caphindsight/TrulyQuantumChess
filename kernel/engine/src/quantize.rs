@@ -1,8 +1,6 @@
 use chess::*;
-use num::complex::Complex64;
 use rand;
 
-pub type Comp = Complex64;
 pub const EPS: f64 = 1e-10;
 
 /// Compares 64-bit floats with precision given by `EPS`.
@@ -54,7 +52,7 @@ pub mod measure {
 #[derive(Clone)]
 pub struct QuantumHarmonic {
     pub board: Chessboard,
-    pub ampl: Comp,
+    pub degeneracy: i64,  // The number of times the harmonic is present in the superposition
 }
 
 /// Represents an arbitrary superposition of harmonics
@@ -92,7 +90,7 @@ impl QuantumChessboard {
 
     /// Removes harmonics with vanishing amplitudes from the list.
     pub fn clean_vanishing(&mut self) {
-        self.clean(|h: &QuantumHarmonic| { h.ampl.norm_sqr() > EPS });
+        self.clean(|h: &QuantumHarmonic| { h.degeneracy > 0 });
     }
 
     /// Gets the information about a particular square
@@ -105,10 +103,10 @@ impl QuantumChessboard {
         let mut numerator: f64 = 0.0;
         let mut denominator: f64 = 0.0;
         for harmonic in &self.harmonics {
-            denominator = denominator + harmonic.ampl.norm_sqr();
+            denominator = denominator + harmonic.degeneracy as f64;
             let current_sq = harmonic.board.get(x, y);
             if current_sq.is_occupied() {
-                numerator = numerator + harmonic.ampl.norm_sqr();
+                numerator = numerator + harmonic.degeneracy as f64;
                 if let Some(expected_sq) = res {
                     if current_sq != expected_sq {
                         panic!("Inconsistent quantum chessboard: square ({}, {}) is in the superposition of pieces!", x, y);

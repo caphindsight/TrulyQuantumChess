@@ -20,7 +20,7 @@ impl QuantumChessEngine {
                 harmonics: vec![
                     QuantumHarmonic {
                         board: Chessboard::new_starting(),
-                        ampl: Comp::new(1.0, 0.0),
+                        degeneracy: 1,
                     }
                 ]
             }
@@ -248,7 +248,7 @@ impl QuantumChessEngine {
                     }
                 }
                 let mut new_harmonic = harmonic.clone();
-                new_harmonic.ampl = new_harmonic.ampl * 2.0;
+                new_harmonic.degeneracy = new_harmonic.degeneracy * 2;
                 new_harmonics.push(new_harmonic);
             }
             if available {

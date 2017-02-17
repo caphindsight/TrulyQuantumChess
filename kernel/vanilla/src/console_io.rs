@@ -51,7 +51,7 @@ pub mod output {
         }
         println!("");
         for harmonic in harmonics {
-            print!("      A={}          ", harmonic.ampl);
+            print!("      (x{})            ", harmonic.degeneracy);
         }
         println!("");
     }

@@ -5,5 +5,4 @@ version = "0.1.0"
 authors = ["Cap. Hindsight <hindsight@yandex.ru>"]
 
 [dependencies]
-num = "0.1.36"
 rand = "0.3"
