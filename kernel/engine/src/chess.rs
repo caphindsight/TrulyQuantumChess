@@ -16,6 +16,15 @@ impl Player {
     }
 }
 
+impl ToString for Player {
+    fn to_string(&self) -> String {
+        match *self {
+            Player::WHITE => "white",
+            Player::BLACK => "black",
+        }.to_string()
+    }
+}
+
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 pub enum Piece {
     EMPTY,
@@ -25,6 +34,20 @@ pub enum Piece {
     ROOK,
     QUEEN,
     KING,
+}
+
+impl ToString for Piece {
+    fn to_string(&self) -> String {
+        match *self {
+            Piece::EMPTY => "empty",
+            Piece::PAWN => "pawn",
+            Piece::KNIGHT => "knight",
+            Piece::BISHOP => "bishop",
+            Piece::ROOK => "rook",
+            Piece::QUEEN => "queen",
+            Piece::KING => "king",
+        }.to_string()
+    }
 }
 
 #[derive(Copy, Clone, Eq, PartialEq)]
