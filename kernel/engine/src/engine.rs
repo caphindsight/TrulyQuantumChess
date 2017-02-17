@@ -77,7 +77,7 @@ impl QuantumChessEngine {
         if (!target.square.is_occupied()) {
             let mut available = false;
             for harmonic in &mut self.state.harmonics {
-                if harmonic.board.allowed(mv) {
+                if harmonic.board.get(sx, sy) == source.square && harmonic.board.allowed(mv) {
                     available = true;
                     harmonic.board.apply(mv);
                 }
@@ -95,7 +95,7 @@ impl QuantumChessEngine {
                 // on all chessboard harmonics. The measurement doesn't occur.
                 let mut available = false;
                 for harmonic in &mut self.state.harmonics {
-                    if harmonic.board.get(sx, sy) == source.square && harmonic.board.allowed(mv) {
+                    if harmonic.board.allowed(mv) {
                         available = true;
                         harmonic.board.apply(mv);
                     }
