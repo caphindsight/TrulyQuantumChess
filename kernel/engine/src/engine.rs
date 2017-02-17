@@ -36,6 +36,7 @@ impl QuantumChessEngine {
             QuantumChessMove::Ordinary(ref omv) => self.submit_move(omv),
             QuantumChessMove::Quantum(ref qmv) => self.submit_quantum_move(qmv),
         };
+        self.state.perform_measurements();
         self.state.regroup();
         self.state.normalize_degeneracy();
         res

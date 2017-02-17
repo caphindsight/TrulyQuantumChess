@@ -100,6 +100,12 @@ impl QuantumChessboard {
         }
     }
 
+    /// Performs measurements for each square in a superposition of pieces
+    pub fn perform_measurements(&mut self) {
+        // TODO: implement this. This is IMPORTANT!
+        panic!("Not implemented yet!");
+    }
+
     /// Groups together similar harmonics, adding degeneracies.
     pub fn regroup(&mut self) {
         let n = self.harmonics.len();

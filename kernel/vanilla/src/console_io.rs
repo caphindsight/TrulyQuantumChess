@@ -91,6 +91,7 @@ pub mod input {
 
     pub fn input_move() -> Option<QuantumChessMove> {
         let ordinary_re = regex::Regex::new(r"^(white|black) (pawn|knight|bishop|rook|queen|king) ([a-h][1-8]) -> ([a-h][1-8]) takes (nothing|pawn|knight|bishop|rook|queen|king)$").unwrap();
+        let shortened_re = regex::Regex::new(r"^(white|black) (pawn|knight|bishop|rook|queen|king) ([a-h][1-8]) -> ([a-h][1-8])$").unwrap();
         let quantum_re = regex::Regex::new(r"^(white|black) (pawn|knight|bishop|rook|queen|king) ([a-h][1-8]) -> ([a-h][1-8]) -> ([a-h][1-8])$").unwrap();
 
         let line = read_line();
@@ -98,6 +99,13 @@ pub mod input {
             let mut iter = ordinary_re.captures_iter(&line);
             let cap = iter.next().unwrap();
             match parse_ordinary_move(&cap[1], &cap[2], &cap[3], &cap[4], &cap[5]) {
+                None => None,
+                Some(m) => Some(QuantumChessMove::Ordinary(m)),
+            }
+        } else if shortened_re.is_match(&line) {
+            let mut iter = shortened_re.captures_iter(&line);
+            let cap = iter.next().unwrap();
+            match parse_ordinary_move(&cap[1], &cap[2], &cap[3], &cap[4], "nothing") {
                 None => None,
                 Some(m) => Some(QuantumChessMove::Ordinary(m)),
             }
