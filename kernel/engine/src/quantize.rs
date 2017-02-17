@@ -88,9 +88,59 @@ impl QuantumChessboard {
         self.harmonics = new_harmonics;
     }
 
-    /// Removes harmonics with vanishing amplitudes from the list.
-    pub fn clean_vanishing(&mut self) {
-        self.clean(|h: &QuantumHarmonic| { h.degeneracy > 0 });
+    fn gcd(a: i64, b: i64) -> i64 {
+        if a == 0 || b == 0 {
+            a + b
+        } else if (a == b) {
+            a
+        } else if (a > b) {
+            QuantumChessboard::gcd(b, a % b)
+        } else {
+            QuantumChessboard::gcd(a, b % a)
+        }
+    }
+
+    /// Groups together similar harmonics, adding degeneracies.
+    pub fn regroup(&mut self) {
+        let n = self.harmonics.len();
+        let mut new_harmonics = Vec::<QuantumHarmonic>::with_capacity(n);
+        self.harmonics.sort_by_key(|qh| qh.board.clone());
+        {
+            let mut prev_harmonic = &self.harmonics[0];
+            let mut degeneracy = prev_harmonic.degeneracy;
+            for i in 1..n {
+                let current_harmonic = &self.harmonics[i];
+                if current_harmonic.board != prev_harmonic.board {
+                    new_harmonics.push(QuantumHarmonic{
+                        board: prev_harmonic.board.clone(),
+                        degeneracy: degeneracy,
+                    });
+                    prev_harmonic = current_harmonic;
+                    degeneracy = current_harmonic.degeneracy;
+                } else {
+                    degeneracy += current_harmonic.degeneracy;
+                }
+            }
+            new_harmonics.push(QuantumHarmonic{
+                board: prev_harmonic.board.clone(),
+                degeneracy: degeneracy,
+            });
+        }
+        if self.harmonics.len() != new_harmonics.len() {
+            self.harmonics = new_harmonics;
+        }
+    }
+
+    /// Divides all degeneracies by their GCD and sorts in reversed order.
+    pub fn normalize_degeneracy(&mut self) {
+        let mut gcd = 0;
+        self.harmonics.sort_by_key(|h| -h.degeneracy);
+        for harmonic in &self.harmonics {
+            gcd = QuantumChessboard::gcd(gcd, harmonic.degeneracy);
+        }
+        for harmonic in &mut self.harmonics {
+            harmonic.degeneracy = harmonic.degeneracy / gcd;
+        }
     }
 
     /// Gets the information about a particular square

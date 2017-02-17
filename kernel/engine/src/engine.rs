@@ -32,10 +32,13 @@ impl QuantumChessEngine {
     }
 
     pub fn submit(&mut self, mv: &QuantumChessMove) -> ChessMoveResult {
-        match *mv {
+        let res = match *mv {
             QuantumChessMove::Ordinary(ref omv) => self.submit_move(omv),
             QuantumChessMove::Quantum(ref qmv) => self.submit_quantum_move(qmv),
-        }
+        };
+        self.state.regroup();
+        self.state.normalize_degeneracy();
+        res
     }
 
     pub fn submit_move(&mut self, mv: &ChessMove) -> ChessMoveResult {
@@ -62,19 +65,19 @@ impl QuantumChessEngine {
             );
         }
 
-        if source.square.player != mv.player {
+        if source.square.player != mv.player && target.square.piece != source.square.piece {
             return ChessMoveResult::Failure(
                 format!("Source position ({}, {}) of the move is occupied by an enemy ({:?}) piece!", sx, sy, source.square.player)
             );
         }
 
-        if target.square.piece != mv.target_piece {
+        if target.square.piece != mv.target_piece && target.square.piece != source.square.piece {
             return ChessMoveResult::Failure(
                 format!("Invalid target piece; expected {:?}, got {:?}!", target.square.piece, mv.target_piece)
             );
         }
 
-        if (!target.square.is_occupied()) {
+        if (!target.square.is_occupied() || target.square == source.square) {
             let mut available = false;
             for harmonic in &mut self.state.harmonics {
                 if harmonic.board.get(sx, sy) == source.square && harmonic.board.allowed(mv) {
@@ -233,17 +236,23 @@ impl QuantumChessEngine {
             let mut available = false;
             let mut new_harmonics = Vec::<QuantumHarmonic>::with_capacity(self.state.harmonics.len() * 2);
             for harmonic in &mut self.state.harmonics {
-                if first_move.is_trivial() || harmonic.board.allowed(&first_move) {
-                    if second_move.is_trivial() || harmonic.board.allowed(&second_move) {
-                        let middle_occupied = harmonic.board.get(mx, my).is_occupied();
-                        if first_move.is_trivial() || second_move.is_trivial() || !middle_occupied {
-                            available = true;
-                            let mut new_harmonic = harmonic.clone();
-                            new_harmonic.board.apply(&first_move);
-                            new_harmonic.board.apply(&second_move);
-                            new_harmonics.push(harmonic.clone());
-                            new_harmonics.push(new_harmonic);
-                            continue;
+                if harmonic.board.get(sx, sy) == source.square {
+                    if first_move.is_trivial() || harmonic.board.allowed(&first_move) {
+                        if second_move.is_trivial() || harmonic.board.allowed(&second_move) {
+                            let middle_occupied = harmonic.board.get(mx, my).is_occupied();
+                            if first_move.is_trivial() || second_move.is_trivial() || !middle_occupied {
+                                available = true;
+                                let mut new_harmonic = harmonic.clone();
+                                if !first_move.is_trivial() {
+                                    new_harmonic.board.apply(&first_move);
+                                }
+                                if !second_move.is_trivial() {
+                                    new_harmonic.board.apply(&second_move);
+                                }
+                                new_harmonics.push(harmonic.clone());
+                                new_harmonics.push(new_harmonic);
+                                continue;
+                            }
                         }
                     }
                 }

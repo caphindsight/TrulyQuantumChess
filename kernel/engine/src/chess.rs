@@ -1,6 +1,7 @@
 use std;
+use std::cmp::*;
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum Player {
     WHITE,
     BLACK,
@@ -25,7 +26,7 @@ impl ToString for Player {
     }
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum Piece {
     EMPTY,
     PAWN,
@@ -50,7 +51,7 @@ impl ToString for Piece {
     }
 }
 
-#[derive(Copy, Clone, Eq, PartialEq)]
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub struct Square {
     pub player: Player,
     pub piece: Piece,
@@ -76,6 +77,37 @@ impl Clone for Chessboard {
             new_squares[i] = self.squares[i];
         }
         Chessboard {squares: new_squares}
+    }
+}
+
+impl PartialEq for Chessboard {
+    fn eq(&self, other: &Chessboard) -> bool {
+        for i in 0..64 {
+            if self.squares[i] != other.squares[i] {
+                return false;
+            }
+        }
+        true
+    }
+}
+
+impl Eq for Chessboard {}
+
+impl Ord for Chessboard {
+    fn cmp(&self, other: &Chessboard) -> Ordering {
+        for i in 0..64 {
+            let c = self.squares[i].cmp(&other.squares[i]);
+            if c != Ordering::Equal {
+                return c;
+            }
+        }
+        Ordering::Equal
+    }
+}
+
+impl PartialOrd for Chessboard {
+    fn partial_cmp(&self, other: &Chessboard) -> Option<Ordering> {
+        Some(self.cmp(other))
     }
 }
 
