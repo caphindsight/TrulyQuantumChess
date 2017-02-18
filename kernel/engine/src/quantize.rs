@@ -102,7 +102,56 @@ impl QuantumChessboard {
 
     /// Performs measurements for each square in a superposition of pieces
     pub fn perform_measurements(&mut self) {
-        // TODO: implement this. This is IMPORTANT!
+        let n = self.harmonics.len();
+        for i in 0_usize..64_usize {
+            let (x, y) = Chessboard::unindex(i);
+            let mut square1 = EMPTY_SQUARE;
+            let mut degeneracy1 = 0_i64;
+            let mut square2 = EMPTY_SQUARE;
+            let mut degeneracy2 = 0_i64;
+            for harmonic in &self.harmonics {
+                let square = harmonic.board.get(x, y);
+                if square.is_occupied() {
+                    if !square1.is_occupied() {
+                        square1 = square;
+                        degeneracy1 = 1;
+                    } else if square1 == square {
+                        degeneracy1 += 1;
+                    } else if !square2.is_occupied() {
+                        square2 = square;
+                        degeneracy2 = 1;
+                    } else if square == square {
+                        degeneracy2 += 1;
+                    } else {
+                        panic!("Too much of an inconsistency found on the quantum chessboard: the square ({}, {}) appears to be in a superposition of more than two pieces!", x, y);
+                    }
+                }
+            }
+            if square1.is_occupied() && square2.is_occupied() {
+                let prob1 = (degeneracy1 as f64) / (n as f64);
+                assert!(fcmp::gt(prob1, 0.0) && fcmp::lt(prob1, 1.0), "Probability was calculated inconsistently");
+
+                let prob2 = (degeneracy2 as f64) / (n as f64);
+                assert!(fcmp::gt(prob2, 0.0) && fcmp::lt(prob2, 1.0), "Probability was calculated inconsistently");
+
+                let prob0 = 1.0 - prob1 - prob2;
+                assert!(fcmp::ge(prob0, 0.0) && fcmp::lt(prob1, 1.0), "Probability was calculated inconsistently");
+
+                if fcmp::ne(prob0, 0.0) && measure::decide(prob0) {
+                    self.clean(|h| {
+                        !h.board.get(x, y).is_occupied()
+                    });
+                } else if measure::decide(prob1 / (prob1 + prob2)) {
+                    self.clean(|h| {
+                        h.board.get(x, y) == square1
+                    });
+                } else {
+                    self.clean(|h| {
+                        h.board.get(x, y) == square2
+                    });
+                }
+            }
+        }
     }
 
     /// Groups together similar harmonics, adding degeneracies.
