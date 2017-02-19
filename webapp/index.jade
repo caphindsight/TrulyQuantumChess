@@ -1,15 +1,4 @@
-include _utils.jade
+extends _template.jade
 
-doctype html
-html(lang="eng")
-  head
-    meta(name="keywords", content="quantum,chess")
-    meta(name="author", content="Cap. Hindsight <hindsight@yandex.ru>")
-    +setup_bootstrap
-    +setup_stylesheet("/stylesheet.css")
-  body
-    .container
-      h1.centered Truly quantum chess #[small alpha]
-      p.lead.centered The thousand-years-old game of chess meets quantum physics.
-
-      a.btn.btn-primary.center-of-screen(href="/play") Play with friend
+block body
+  a.btn.btn-primary.center-of-screen(href="/board") Play with friend
