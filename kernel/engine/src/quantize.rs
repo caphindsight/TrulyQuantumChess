@@ -137,17 +137,14 @@ impl QuantumChessboard {
                 let prob0 = 1.0 - prob1 - prob2;
                 assert!(fcmp::ge(prob0, 0.0) && fcmp::lt(prob1, 1.0), "Probability was calculated inconsistently");
 
-                if fcmp::ne(prob0, 0.0) && measure::decide(prob0) {
+                let prob_relative = prob1 / (prob1 + prob2);
+                if measure::decide(prob_relative) {
                     self.clean(|h| {
-                        !h.board.get(x, y).is_occupied()
-                    });
-                } else if measure::decide(prob1 / (prob1 + prob2)) {
-                    self.clean(|h| {
-                        h.board.get(x, y) == square1
+                        h.board.get(x, y) != square2
                     });
                 } else {
                     self.clean(|h| {
-                        h.board.get(x, y) == square2
+                        h.board.get(x, y) != square1
                     });
                 }
             }
