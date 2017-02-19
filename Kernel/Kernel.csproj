@@ -32,6 +32,8 @@
   <ItemGroup>
     <Compile Include="Chess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Errors.cs" />
+    <Compile Include="Moves.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
