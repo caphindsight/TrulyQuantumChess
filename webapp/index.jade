@@ -6,9 +6,10 @@ html(lang="eng")
     meta(name="keywords", content="quantum,chess")
     meta(name="author", content="Cap. Hindsight <hindsight@yandex.ru>")
     +setup_bootstrap
+    +setup_stylesheet("/stylesheet.css")
   body
     .container
-      h1 Quantum chess
-      p.lead The thousand-years-old game of chess meets quantum physics
-      
-      p Your ad could be here :)
+      h1.centered Truly quantum chess #[small alpha]
+      p.lead.centered The thousand-years-old game of chess meets quantum physics.
+
+      a.btn.btn-primary.center-of-screen(href="/play") Play with friend
