@@ -9,6 +9,19 @@ namespace TrulyQuantumChess.Kernel.Chess {
         Black
     }
 
+    public static class PlayerUtils {
+        public static Player InvertPlayer(Player player) {
+            switch (player) {
+                case Player.White:
+                    return Player.Black;
+                case Player.Black:
+                    return Player.White;
+                default:
+                    throw new AssertionException($"Unsupported player: {player}");
+            }
+        }
+    }
+
     public enum PieceType {
         Pawn,
         Knight,

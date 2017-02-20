@@ -18,4 +18,14 @@ namespace TrulyQuantumChess.Kernel.Errors {
             }
         }
     }
+
+    public class QuantumChessEngineException : QuantumChessException {
+        public QuantumChessEngineException(string message)
+            : base(message)
+        {}
+
+        public static void Throw(string message) {
+            throw new QuantumChessEngineException(message);
+        }
+    }
 }
