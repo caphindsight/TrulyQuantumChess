@@ -34,6 +34,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="Moves.cs" />
+    <Compile Include="Quantize.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

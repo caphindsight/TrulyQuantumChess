@@ -1,6 +1,4 @@
-﻿using System;
-
-using TrulyQuantumChess.Kernel.Chess;
+﻿using TrulyQuantumChess.Kernel.Chess;
 
 namespace TrulyQuantumChess.Kernel.Moves {
     public abstract class QuantumChessMove {
@@ -47,36 +45,8 @@ namespace TrulyQuantumChess.Kernel.Moves {
         }
     }
 
-    public sealed class SingleQuantumMove : QuantumChessMove {
-        public SingleQuantumMove(Piece actorPiece, Position source, Position target) {
-            ActorPiece_ = actorPiece;
-            Source_ = source;
-            Target_ = target;
-        }
-
-        private readonly Piece ActorPiece_;
-        private readonly Position Source_;
-        private readonly Position Target_;
-
-        public Piece ActorPiece {
-            get { return ActorPiece_; }
-        }
-
-        public Position Source {
-            get { return Source_; }
-        }
-
-        public Position Target {
-            get { return Target_; }
-        }
-
-        public override Player ActorPlayer {
-            get { return ActorPiece_.Player; }
-        }
-    }
-
-    public sealed class DoubleQuantumMove : QuantumChessMove {
-        public DoubleQuantumMove(Piece actorPiece, Position source, Position middle, Position target) {
+    public sealed class QuantumMove : QuantumChessMove {
+        public QuantumMove(Piece actorPiece, Position source, Position? middle, Position target) {
             ActorPiece_ = actorPiece;
             Source_ = source;
             Middle_ = middle;
@@ -85,7 +55,7 @@ namespace TrulyQuantumChess.Kernel.Moves {
 
         private readonly Piece ActorPiece_;
         private readonly Position Source_;
-        private readonly Position Middle_;
+        private readonly Position? Middle_;
         private readonly Position Target_;
 
         public Piece ActorPiece {
@@ -96,7 +66,7 @@ namespace TrulyQuantumChess.Kernel.Moves {
             get { return Source_; }
         }
 
-        public Position Middle {
+        public Position? Middle {
             get { return Middle_; }
         }
 

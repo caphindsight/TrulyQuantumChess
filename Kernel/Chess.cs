@@ -100,10 +100,24 @@ namespace TrulyQuantumChess.Kernel.Chess {
         public override int GetHashCode() {
             return Ind_.GetHashCode();
         }
+
+        public override string ToString() {
+            char c1 = Convert.ToChar(Convert.ToInt32('A') + X);
+            char c2 = Convert.ToChar(Convert.ToInt32('1') + Y);
+            return $"{c1}{c2}";
+        }
+    }
+
+    public enum GameState {
+        GameStillGoing,
+        WhiteVictory,
+        BlackVictory,
+        Tie
     }
 
     public class Chessboard {
-        private Piece?[] Pieces_ = new Piece?[64];
+        private readonly Piece?[] Pieces_ = new Piece?[64];
+        private GameState GameState_ = GameState.Tie;
 
         public static Chessboard EmptyChessboard() {
             return new Chessboard();
@@ -111,6 +125,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
 
         public static Chessboard StartingChessboard() {
             var chessboard = EmptyChessboard();
+            chessboard.GameState_ = GameState.GameStillGoing;
 
             // Setting up white power pieces
             chessboard.Pieces_[0] = new Piece(Player.White, PieceType.Rook);
@@ -147,10 +162,15 @@ namespace TrulyQuantumChess.Kernel.Chess {
 
         public Chessboard Clone() {
             var res = new Chessboard();
+            res.GameState_ = GameState_;
             for (int i = 0; i < 64; i++) {
                 res.Pieces_[i] = Pieces_[i];
             }
             return res;
+        }
+
+        public GameState GameState {
+            get { return GameState_; }
         }
 
         public Piece? this[Position pos] {
@@ -182,6 +202,42 @@ namespace TrulyQuantumChess.Kernel.Chess {
                 var pos = Position.FromCoords(x, y);
                 Pieces_[pos.Ind] = value;
             }
+        }
+
+        public static bool operator == (Chessboard a, Chessboard b) {
+            for (int i = 0; i < 64; i++) {
+                if (a.Pieces_[i] != b.Pieces_[i])
+                    return false;
+            }
+            return a.GameState_ == b.GameState_;
+        }
+
+        public static bool operator != (Chessboard a, Chessboard b) {
+            return !(a == b);
+        }
+
+        public override bool Equals(object obj) {
+            if (obj is Chessboard) {
+                var chessboard = obj as Chessboard;
+                return this == chessboard;
+            } else {
+                return false;
+            }
+        }
+
+        public override int GetHashCode() {
+            int res = 0, hash_base = 17;
+            unchecked {
+                for (int i = 0; i < 64; i++) {
+                    res *= hash_base;
+                    res += Pieces_[i].GetHashCode();
+                }
+            }
+            return res;
+        }
+
+        public int GetHashCodeWithGameState() {
+            return unchecked(GetHashCode() * 4 + GameState_.GetHashCode());
         }
 
         private static int Signum(int x) {
@@ -266,7 +322,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
             }
         }
 
-        public bool CheckOrdinaryMoveAvailable(OrdinaryMove move) {
+        public bool CheckOrdinaryMoveApplicable(OrdinaryMove move) {
             if (move.Source == move.Target) {
                 // Dummy moves aren't allowed by the rules of the game
                 return false;
@@ -275,7 +331,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
             Piece? source = this[move.Source];
             if (source != move.ActorPiece) {
                 // The chessboard doesn't have an actor piece at the source position
-                // Therefore the move is unavailable
+                // Therefore the move is inapplicable
                 return false;
             }
 
@@ -285,12 +341,37 @@ namespace TrulyQuantumChess.Kernel.Chess {
         }
 
         public void ApplyOrdinaryMove(OrdinaryMove move) {
-            AssertionException.Assert(CheckOrdinaryMoveAvailable(move), $"Attempted applying unavailable ordinary move");
+            AssertionException.Assert(CheckOrdinaryMoveApplicable(move), $"Attempted applying inapplicable ordinary move");
             this[move.Target] = this[move.Source];
             this[move.Source] = null;
+            if (GameState_ == GameState.GameStillGoing) {
+                bool white_king_present = false;
+                bool black_king_present = false;
+                for (int i = 0; i < 64; i++) {
+                    if (!Pieces_[i].HasValue)
+                        continue;
+                    if (Pieces_[i].Value.PieceType != PieceType.King)
+                        continue;
+                    switch (Pieces_[i].Value.Player) {
+                        case Player.White:
+                            white_king_present = true;
+                            break;
+                        case Player.Black:
+                            black_king_present = true;
+                            break;
+                    }
+                }
+                if (!white_king_present && !black_king_present) {
+                    GameState_ = GameState.Tie;
+                } else if (!white_king_present) {
+                    GameState_ = GameState.BlackVictory;
+                } else if (!black_king_present) {
+                    GameState_ = GameState.WhiteVictory;
+                }
+            }
         }
 
-        public bool CheckSingleQuantumMoveAvailable(SingleQuantumMove move) {
+        public bool CheckQuantumMoveApplicable(QuantumMove move) {
             if (move.Source == move.Target) {
                 // Dummy moves aren't allowed by the rules of the game
                 return false;
@@ -299,7 +380,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
             Piece? source = this[move.Source];
             if (source != move.ActorPiece) {
                 // The chessboard doesn't have an actor piece at the source position
-                // Therefore the move is unavailable
+                // Therefore the move is inapplicable
                 return false;
             }
 
@@ -309,47 +390,22 @@ namespace TrulyQuantumChess.Kernel.Chess {
                 return false;
             }
 
-            return CheckIntermediateSquares(move.ActorPiece, move.Source, move.Target, false);
+            if (move.Middle.HasValue) {
+                Piece? middle = this[move.Middle.Value];
+                if (middle != null) {
+                    // Move is inapplicable
+                    return false;
+                }
+
+                return CheckIntermediateSquares(move.ActorPiece, move.Source, move.Middle.Value, false) &&
+                    CheckIntermediateSquares(move.ActorPiece, move.Middle.Value, move.Target, false);
+            } else {
+                return CheckIntermediateSquares(move.ActorPiece, move.Source, move.Target, false);
+            }
         }
 
-        public void ApplySingleQuantumMove(SingleQuantumMove move) {
-            AssertionException.Assert(CheckSingleQuantumMoveAvailable(move), $"Attempted applying unavailable single quantum move");
-            this[move.Target] = this[move.Source];
-            this[move.Source] = null;
-        }
-
-        public bool CheckDoubleQuantumMoveAvailable(DoubleQuantumMove move) {
-            if (move.Source == move.Target || move.Source == move.Middle || move.Middle == move.Target) {
-                // Dummy moves aren't allowed by the rules of the game
-                return false;
-            }
-
-            Piece? source = this[move.Source];
-            if (source != move.ActorPiece) {
-                // The chessboard doesn't have an actor piece at the source position
-                // Therefore the move is unavailable
-                return false;
-            }
-
-            Piece? middle = this[move.Middle];
-            if (middle != null) {
-                // Middle square is occupied
-                // Therefore the move is unavailable
-                return false;
-            }
-
-            Piece? target = this[move.Target];
-            if (target != null) {
-                // You can't quantum-capture!
-                return false;
-            }
-
-            return CheckIntermediateSquares(move.ActorPiece, move.Source, move.Middle, false) &&
-                CheckIntermediateSquares(move.ActorPiece, move.Middle, move.Target, false);
-        }
-
-        public void ApplyDoubleQuantumMove(DoubleQuantumMove move) {
-            AssertionException.Assert(CheckDoubleQuantumMoveAvailable(move), $"Attempted applying unavailable double quantum move");
+        public void ApplyQuantumMove(QuantumMove move) {
+            AssertionException.Assert(CheckQuantumMoveApplicable(move), $"Attempted applying inapplicable quantum move");
             this[move.Target] = this[move.Source];
             this[move.Source] = null;
         }
