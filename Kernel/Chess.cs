@@ -409,5 +409,19 @@ namespace TrulyQuantumChess.Kernel.Chess {
             this[move.Target] = this[move.Source];
             this[move.Source] = null;
         }
+
+        public void RegisterVictory(Player player) {
+            if (GameState_ == GameState.GameStillGoing) {
+                switch (player) {
+                    case Player.White:
+                        GameState_ = GameState.WhiteVictory;
+                    break;
+
+                    case Player.Black:
+                        GameState_ = GameState.BlackVictory;
+                    break;
+                }
+            }
+        }
     }
 }
