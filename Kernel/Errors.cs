@@ -19,13 +19,23 @@ namespace TrulyQuantumChess.Kernel.Errors {
         }
     }
 
-    public class QuantumChessEngineException : QuantumChessException {
-        public QuantumChessEngineException(string message)
+    public class MoveProcessException : QuantumChessException {
+        public MoveProcessException(string message)
             : base(message)
         {}
 
         public static void Throw(string message) {
-            throw new QuantumChessEngineException(message);
+            throw new MoveProcessException(message);
+        }
+    }
+
+    public class MoveParseException : QuantumChessException {
+        public MoveParseException(string message)
+            : base(message)
+        {}
+
+        public static void Throw(string message) {
+            throw new MoveParseException(message);
         }
     }
 }

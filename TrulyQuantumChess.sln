@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kernel", "Kernel\Kernel.csproj", "{B4B23590-B467-4F12-929B-313A2025613E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vanilla", "Vanilla\Vanilla.csproj", "{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B4B23590-B467-4F12-929B-313A2025613E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4B23590-B467-4F12-929B-313A2025613E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4B23590-B467-4F12-929B-313A2025613E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

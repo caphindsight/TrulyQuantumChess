@@ -29,7 +29,7 @@ namespace TrulyQuantumChess.Kernel.Engine {
 
         public void Submit(QuantumChessMove move) {
             if (move.ActorPlayer != ActivePlayer_)
-                QuantumChessEngineException.Throw("Waiting for another player's move");
+                MoveProcessException.Throw("Waiting for another player's move");
 
             if (move is CapitulateMove) {
                 Chessboard_.RegisterVictory(PlayerUtils.InvertPlayer(ActivePlayer_));
@@ -39,7 +39,7 @@ namespace TrulyQuantumChess.Kernel.Engine {
                     Chessboard_.ApplyOrdinaryMove(omove);
                     ActivePlayer_ = PlayerUtils.InvertPlayer(ActivePlayer_);
                 } else {
-                    QuantumChessEngineException.Throw("Move is unapplicable on all harmonics");
+                    MoveProcessException.Throw("Move is unapplicable on all harmonics");
                 }
             } else if (move is QuantumMove) {
                 var qmove = move as QuantumMove;
@@ -47,7 +47,7 @@ namespace TrulyQuantumChess.Kernel.Engine {
                     Chessboard_.ApplyQuantumMove(qmove);
                     ActivePlayer_ = PlayerUtils.InvertPlayer(ActivePlayer_);
                 } else {
-                    QuantumChessEngineException.Throw("Quantum move is unapplicable on all harmonics");
+                    MoveProcessException.Throw("Quantum move is unapplicable on all harmonics");
                 }
             } else {
                 AssertionException.Assert(false, $"Unsupported move type: {move.GetType().Name}");

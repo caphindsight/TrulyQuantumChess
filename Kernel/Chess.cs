@@ -119,6 +119,14 @@ namespace TrulyQuantumChess.Kernel.Chess {
             char c2 = Convert.ToChar(Convert.ToInt32('1') + Y);
             return $"{c1}{c2}";
         }
+
+        public static Position Parse(string str) {
+            str = str.ToLower();
+            AssertionException.Assert(str.Length == 2, "Invalid position format");
+            int x = Convert.ToInt32(str[0]) - Convert.ToInt32('a');
+            int y = Convert.ToInt32(str[1]) - Convert.ToInt32('1');
+            return FromCoords(x, y);
+        }
     }
 
     public enum GameState {
@@ -304,7 +312,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
                 case PieceType.Rook:
                     if (dx != 0 && dy != 0)
                         return false;
-                    for (int i = 1; i < dx + dy; i++) {
+                    for (int i = 1; i < dx_abs + dy_abs; i++) {
                         if (this[source.X + i * dx_sig, source.Y + i * dy_sig] != null)
                             return false;
                     }
@@ -318,7 +326,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
                         }
                         return true;
                     } else if (dx_abs == 0 || dy_abs == 0) {
-                        for (int i = 1; i < dx + dy; i++) {
+                        for (int i = 1; i < dx_abs + dy_abs; i++) {
                             if (this[source.X + i * dx_sig, source.Y + i * dy_sig] != null)
                                 return false;
                         }

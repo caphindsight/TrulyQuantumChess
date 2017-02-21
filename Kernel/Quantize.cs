@@ -10,15 +10,18 @@ namespace TrulyQuantumChess.Kernel.Quantize {
     public static class MeasurementUtils {
         private static readonly Random Random_ = new Random();
 
+        public static double Probability(ulong degeneracy, ulong total) =>
+            Convert.ToDouble(degeneracy) / Convert.ToDouble(total);
+
         public static bool Decide(double probability) {
             double rand = Random_.NextDouble();
             bool res = rand < probability;
-            Console.WriteLine($"Measurement with probability {probability} rendered {res}");
+            // Console.WriteLine($"Measurement with probability {probability} rendered {res}");
             return res;
         }
 
         public static bool Decide(ulong degeneracy, ulong total) {
-            return Decide(Convert.ToDouble(degeneracy) / Convert.ToDouble(total));
+            return Decide(Probability(degeneracy, total));
         }
     }
 
@@ -36,20 +39,30 @@ namespace TrulyQuantumChess.Kernel.Quantize {
         }
     }
 
+    public struct QuantumPiece {
+        public readonly Piece? Piece;
+        public readonly double Probability;
+
+        public QuantumPiece(Piece? piece, double probability) {
+            Piece = piece;
+            Probability = probability;
+        }
+    }
+
     public class QuantumChessboard {
-        private List<QuantumHarmonic> Harmonics = new List<QuantumHarmonic>();
+        private List<QuantumHarmonic> Harmonics_ = new List<QuantumHarmonic>();
         private GameState GameState_ = GameState.Tie;
 
         public static QuantumChessboard StartingQuantumChessboard() {
             var res = new QuantumChessboard();
             res.GameState_ = GameState.GameStillGoing;
-            res.Harmonics.Add(new QuantumHarmonic(Chessboard.StartingChessboard(), 1));
+            res.Harmonics_.Add(new QuantumHarmonic(Chessboard.StartingChessboard(), 1));
             return res;
         }
 
         private ulong DegeneracyNormalization() {
             ulong res = 0;
-            foreach (QuantumHarmonic harmonic in Harmonics)
+            foreach (QuantumHarmonic harmonic in Harmonics_)
                 res += harmonic.Degeneracy;
             return res;
         }
@@ -68,32 +81,32 @@ namespace TrulyQuantumChess.Kernel.Quantize {
 
         private void RenormalizeDegeneracies() {
             ulong gcd = 0;
-            foreach (QuantumHarmonic harmonic in Harmonics)
+            foreach (QuantumHarmonic harmonic in Harmonics_)
                 gcd = Gcd(gcd, harmonic.Degeneracy);
-            foreach (QuantumHarmonic harmonic in Harmonics)
+            foreach (QuantumHarmonic harmonic in Harmonics_)
                 harmonic.Degeneracy /= gcd;
         }
 
         private void RegroupHarmonics() {
             RemoveVanishing();
-            AssertionException.Assert(Harmonics.Count > 0, "Empty quantum superposition found");
+            AssertionException.Assert(Harmonics_.Count > 0, "Empty quantum superposition found");
 
-            Harmonics.Sort((a, b) => a.Board.GetHashCodeWithGameState().CompareTo(b.Board.GetHashCodeWithGameState()));
+            Harmonics_.Sort((a, b) => a.Board.GetHashCodeWithGameState().CompareTo(b.Board.GetHashCodeWithGameState()));
             var new_harmonics = new List<QuantumHarmonic>();
 
-            QuantumHarmonic prev_harmonic = Harmonics[0];
-            for (int i = 1; i < Harmonics.Count; i++) {
-                if (Harmonics[i].Board == prev_harmonic.Board) {
-                    prev_harmonic.Degeneracy += Harmonics[i].Degeneracy;
+            QuantumHarmonic prev_harmonic = Harmonics_[0];
+            for (int i = 1; i < Harmonics_.Count; i++) {
+                if (Harmonics_[i].Board == prev_harmonic.Board) {
+                    prev_harmonic.Degeneracy += Harmonics_[i].Degeneracy;
                 } else {
                     new_harmonics.Add(prev_harmonic);
-                    prev_harmonic = Harmonics[i];
+                    prev_harmonic = Harmonics_[i];
                 }
             }
             new_harmonics.Add(prev_harmonic);
 
-            Harmonics = new_harmonics;
-            Harmonics.Sort((a, b) => b.Degeneracy.CompareTo(a.Degeneracy));
+            Harmonics_ = new_harmonics;
+            Harmonics_.Sort((a, b) => b.Degeneracy.CompareTo(a.Degeneracy));
         }
 
         private void RemoveVanishing() {
@@ -103,12 +116,12 @@ namespace TrulyQuantumChess.Kernel.Quantize {
 
         private void FilterBy(Predicate<QuantumHarmonic> pred) {
             var new_harmonics = new List<QuantumHarmonic>();
-            foreach (QuantumHarmonic harmonic in Harmonics) {
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
                 if (pred(harmonic))
                     new_harmonics.Add(harmonic);
             }
             AssertionException.Assert(new_harmonics.Count > 0, "Filtered into empty quantum superposition");
-            Harmonics = new_harmonics;
+            Harmonics_ = new_harmonics;
             RenormalizeDegeneracies();
         }
 
@@ -116,9 +129,11 @@ namespace TrulyQuantumChess.Kernel.Quantize {
             var piece_degeneracies = new Dictionary<Piece, ulong>();
             ulong overall_degeneracy = 0;
 
-            foreach (QuantumHarmonic harmonic in Harmonics) {
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
                 Piece? square = harmonic.Board[pos];
                 if (square.HasValue) {
+                    if (!piece_degeneracies.ContainsKey(square.Value))
+                        piece_degeneracies[square.Value] = 0;
                     piece_degeneracies[square.Value] += harmonic.Degeneracy;
                     overall_degeneracy += harmonic.Degeneracy;
                 }
@@ -153,21 +168,21 @@ namespace TrulyQuantumChess.Kernel.Quantize {
             if (GameState_ != GameState.GameStillGoing)
                 return;
 
-            if (Harmonics.All((h) => h.Board.GameState != GameState.GameStillGoing)) {
-                ulong white_victory_degeneracy = Harmonics
+            if (Harmonics_.All((h) => h.Board.GameState != GameState.GameStillGoing)) {
+                ulong white_victory_degeneracy = Harmonics_
                     .Where((h) => h.Board.GameState == GameState.WhiteVictory)
                     .Select((h) => h.Degeneracy)
-                    .Aggregate((a, b) => a + b);
+                    .Aggregate(0ul, (a, b) => a + b);
 
-                ulong black_victory_degeneracy = Harmonics
+                ulong black_victory_degeneracy = Harmonics_
                     .Where((h) => h.Board.GameState == GameState.BlackVictory)
                     .Select((h) => h.Degeneracy)
-                    .Aggregate((a, b) => a + b);
+                    .Aggregate(0ul, (a, b) => a + b);
 
-                ulong tie_degeneracy = Harmonics
+                ulong tie_degeneracy = Harmonics_
                     .Where((h) => h.Board.GameState == GameState.Tie)
                     .Select((h) => h.Degeneracy)
-                    .Aggregate((a, b) => a + b);
+                    .Aggregate(0ul, (a, b) => a + b);
 
                 ulong total_degeneracy = white_victory_degeneracy + black_victory_degeneracy + tie_degeneracy;
                 if (!MeasurementUtils.Decide(tie_degeneracy, total_degeneracy)) {
@@ -190,18 +205,22 @@ namespace TrulyQuantumChess.Kernel.Quantize {
             UpdateGameState();
         }
 
+        public List<QuantumHarmonic> Harmonics {
+            get { return Harmonics_; }
+        }
+
         public GameState GameState {
             get { return GameState_; }
         }
 
         public bool CheckOrdinaryMoveApplicable(OrdinaryMove move) {
-            return Harmonics.Any((h) => h.Board.GameState == GameState.GameStillGoing &&
+            return Harmonics_.Any((h) => h.Board.GameState == GameState.GameStillGoing &&
                                  h.Board.CheckOrdinaryMoveApplicable(move));
         }
 
         public void ApplyOrdinaryMove(OrdinaryMove move) {
             bool applied = false;
-            foreach (QuantumHarmonic harmonic in Harmonics) {
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
                 if (harmonic.Board.CheckOrdinaryMoveApplicable(move)) {
                     harmonic.Board.ApplyOrdinaryMove(move);
                     applied = true;
@@ -212,14 +231,14 @@ namespace TrulyQuantumChess.Kernel.Quantize {
         }
 
         public bool CheckQuantumMoveApplicable(QuantumMove move) {
-            return Harmonics.Any((h) => h.Board.GameState == GameState.GameStillGoing &&
+            return Harmonics_.Any((h) => h.Board.GameState == GameState.GameStillGoing &&
                                  h.Board.CheckQuantumMoveApplicable(move));
         }
 
         public void ApplyQuantumMove(QuantumMove move) {
             bool applied = false;
             var new_harmonics = new List<QuantumHarmonic>();
-            foreach (QuantumHarmonic harmonic in Harmonics) {
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
                 if (harmonic.Board.CheckQuantumMoveApplicable(move)) {
                     // Passing to the superposition of the original and new harmonics
                     QuantumHarmonic new_harmonic = harmonic.Clone();
@@ -233,18 +252,39 @@ namespace TrulyQuantumChess.Kernel.Quantize {
                     new_harmonics.Add(harmonic);
                 }
             }
-            Harmonics = new_harmonics;
+            Harmonics_ = new_harmonics;
             UpdateQuantumCheckboard();
             AssertionException.Assert(applied, "Quantum move couldn't be applied on any harmonic");
         }
 
         public void RegisterVictory(Player player) {
-            foreach (QuantumHarmonic harmonic in Harmonics) {
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
                 if (harmonic.Board.GameState == GameState.GameStillGoing) {
                     harmonic.Board.RegisterVictory(player);
                 }
             }
             UpdateGameState();
+        }
+
+        public QuantumPiece GetQuantumPiece(Position pos) {
+            Piece? piece = null;
+            ulong filled = 0, empty = 0;
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
+                Piece? classical = harmonic.Board[pos];
+                if (classical.HasValue) {
+                    AssertionException.Assert(piece == null || piece == classical,
+                                              $"The square {pos} appears in a superposition of two pieces");
+                    piece = classical;
+                    filled += harmonic.Degeneracy;
+                } else {
+                    empty += harmonic.Degeneracy;
+                }
+            }
+            if (piece.HasValue) {
+                return new QuantumPiece(piece, MeasurementUtils.Probability(filled, filled + empty));
+            } else {
+                return new QuantumPiece(null, 1.0);
+            }
         }
     }
 }
