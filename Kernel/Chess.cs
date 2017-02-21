@@ -444,5 +444,10 @@ namespace TrulyQuantumChess.Kernel.Chess {
                 }
             }
         }
+
+        public void RegisterTie() {
+            if (GameState_ == GameState.GameStillGoing)
+                GameState_ = GameState.Tie;
+        }
     }
 }

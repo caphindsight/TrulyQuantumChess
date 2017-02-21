@@ -33,6 +33,8 @@ namespace TrulyQuantumChess.Kernel.Engine {
 
             if (move is CapitulateMove) {
                 Chessboard_.RegisterVictory(PlayerUtils.InvertPlayer(ActivePlayer_));
+            } else if (move is AgreeToTieMove) {
+                Chessboard_.RegisterTie();
             } else if (move is OrdinaryMove) {
                 var omove = move as OrdinaryMove;
                 if (Chessboard_.CheckOrdinaryMoveApplicable(omove)) {

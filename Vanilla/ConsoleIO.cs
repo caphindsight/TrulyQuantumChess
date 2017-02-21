@@ -23,6 +23,7 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
             string move_str = Console.ReadLine();
 
             string capitulate_move_regex = @"^(quit|exit|capitulate)$";
+            string agree_to_tie_move_regex = @"^tie$";
             string ordinary_move_regex = @"^([A-Za-z][1-8])\s*([A-Za-z][1-8])$";
             string quantum_move_regex = @"^(?:q|Q|quantum)\s+([A-Za-z][1-8])\s*((?:[A-Za-z][1-8])?)\s*([A-Za-z][1-8])$";
 
@@ -31,6 +32,8 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
 
             if (Regex.IsMatch(move_str, capitulate_move_regex)) {
                 return new CapitulateMove(engine.ActivePlayer);
+            } else if (Regex.IsMatch(move_str, agree_to_tie_move_regex)) {
+                return new AgreeToTieMove(engine.ActivePlayer);
             } else if (ordinary_match.Success) {
                 Position source = Position.Parse(ordinary_match.Groups[1].Captures[0].Value);
                 Position target = Position.Parse(ordinary_match.Groups[2].Captures[0].Value);

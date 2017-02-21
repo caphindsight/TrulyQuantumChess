@@ -17,6 +17,18 @@ namespace TrulyQuantumChess.Kernel.Moves {
         }
     }
 
+    public sealed class AgreeToTieMove : QuantumChessMove {
+        public AgreeToTieMove(Player actorPlayer) {
+            ActorPlayer_ = actorPlayer;
+        }
+
+        private Player ActorPlayer_;
+
+        public override Player ActorPlayer {
+            get { return ActorPlayer_; }
+        }
+    }
+
     public sealed class OrdinaryMove : QuantumChessMove {
         public OrdinaryMove(Piece actorPiece, Position source, Position target) {
             ActorPiece_ = actorPiece;

@@ -259,8 +259,16 @@ namespace TrulyQuantumChess.Kernel.Quantize {
 
         public void RegisterVictory(Player player) {
             foreach (QuantumHarmonic harmonic in Harmonics_) {
-                if (harmonic.Board.GameState == GameState.GameStillGoing) {
+                if (harmonic.Board.GameState == GameState.GameStillGoing)
                     harmonic.Board.RegisterVictory(player);
+            }
+            UpdateGameState();
+        }
+
+        public void RegisterTie() {
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
+                if (harmonic.Board.GameState == GameState.GameStillGoing) {
+                    harmonic.Board.RegisterTie();
                 }
             }
             UpdateGameState();
