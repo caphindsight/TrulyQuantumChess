@@ -129,7 +129,7 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
                 Console.WriteLine();
             }
             foreach (QuantumHarmonic harmonic in harmonics) {
-                Console.Write("  A B C D E F G H     ");
+                Console.Write("  a b c d e f g h     ");
             }
             Console.WriteLine();
             foreach (QuantumHarmonic harmonic in harmonics) {
