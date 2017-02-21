@@ -10,9 +10,15 @@ using TrulyQuantumChess.Vanilla.ConsoleIO;
 namespace TrulyQuantumChess.Vanilla {
     public static class Program {
         public static void Main(string[] args) {
+            int cols = 8;
+            if (args.Length >= 1) {
+                cols = Convert.ToInt32(args[0]);
+            }
+
             var engine = new QuantumChessEngine();
             for (;;) {
-                Output.DisplayQuantumChessboard(engine.Chessboard, 8);
+                Output.DisplayQuantumChessboard(engine.Chessboard, cols);
+                Console.WriteLine();
 
                 for (;;) {
                     try {
