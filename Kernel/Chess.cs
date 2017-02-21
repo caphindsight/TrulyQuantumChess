@@ -357,7 +357,12 @@ namespace TrulyQuantumChess.Kernel.Chess {
             }
 
             Piece? target = this[move.Target];
-            bool capture = target != null;
+            bool capture = target.HasValue;
+            if (capture && target.Value.Player == move.ActorPlayer) {
+                // You can't capture your own pieces
+                return false;
+            }
+
             return CheckIntermediateSquares(move.ActorPiece, move.Source, move.Target, capture);
         }
 
@@ -448,6 +453,78 @@ namespace TrulyQuantumChess.Kernel.Chess {
                                           "We just applied the pawn move, but somehow no pawn present at the target square");
                 this[move.Target] = new Piece(this[move.Target].Value.Player, PieceType.Queen);
             }
+        }
+
+        public bool CheckCastleMoveApplicable(CastleMove move) {
+            int c;
+
+            switch (move.ActorPlayer) {
+                case Player.White:
+                    c = 0;
+                break;
+
+                case Player.Black:
+                    c = 7;
+                break;
+
+                default: throw new AssertionException($"Unsupported player: {move.ActorPlayer}");
+            }
+
+            switch (move.CastleType) {
+                case CastleType.Left: return
+                    this[0, c] == new Piece(move.ActorPlayer, PieceType.Rook) &&
+                    this[1, c] == null &&
+                    this[2, c] == null &&
+                    this[3, c] == null &&
+                    this[4, c] == new Piece(move.ActorPlayer, PieceType.King);
+
+                case CastleType.Right: return
+                    this[4, 0] == new Piece(move.ActorPlayer, PieceType.King) &&
+                    this[5, 0] == null &&
+                    this[6, 0] == null &&
+                    this[7, 0] == new Piece(move.ActorPlayer, PieceType.Rook);
+
+                default:
+                    throw new AssertionException($"Unsupported castle type: {move.CastleType}");
+            }
+        }
+
+        public void ApplyCastleMove(CastleMove move) {
+            AssertionException.Assert(CheckCastleMoveApplicable(move), $"Attempted applying inapplicable castle move");
+            int c;
+
+            switch (move.ActorPlayer) {
+                case Player.White:
+                    c = 0;
+                break;
+
+                case Player.Black:
+                    c = 7;
+                break;
+
+                default: throw new AssertionException($"Unsupported player: {move.ActorPlayer}");
+            }
+
+            switch (move.CastleType) {
+                case CastleType.Left:
+                    this[0, c] = null;
+                    this[1, c] = null;
+                    this[2, c] = new Piece(move.ActorPlayer, PieceType.King);
+                    this[3, c] = new Piece(move.ActorPlayer, PieceType.Rook);
+                    this[4, c] = null;
+                break;
+
+                case CastleType.Right:
+                    this[4, c] = null;
+                    this[5, c] = new Piece(move.ActorPlayer, PieceType.Rook);
+                    this[6, c] = new Piece(move.ActorPlayer, PieceType.King);
+                    this[7, c] = null;
+                break;
+
+                default:
+                    throw new AssertionException($"Unsupported castle type: {move.CastleType}");
+            }
+
         }
 
         public void RegisterVictory(Player player) {

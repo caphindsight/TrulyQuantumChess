@@ -26,9 +26,11 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
             string agree_to_tie_move_regex = @"^tie$";
             string ordinary_move_regex = @"^([A-Za-z][1-8])\s*([A-Za-z][1-8])$";
             string quantum_move_regex = @"^(?:q|Q|quantum)\s+([A-Za-z][1-8])\s*((?:[A-Za-z][1-8])?)\s*([A-Za-z][1-8])$";
+            string castle_move_regex = @"^castle (left|right)$";
 
             Match ordinary_match = Regex.Match(move_str, ordinary_move_regex);
             Match quantum_match = Regex.Match(move_str, quantum_move_regex);
+            Match castle_match = Regex.Match(move_str, castle_move_regex);
 
             if (Regex.IsMatch(move_str, capitulate_move_regex)) {
                 return new CapitulateMove(engine.ActivePlayer);
@@ -53,6 +55,17 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
                     return new QuantumMove(qpiece.Piece.Value, source, middle, target);
                 else
                     throw new MoveParseException($"No piece found at {source}");
+            } else if (castle_match.Success) {
+                string castle_type_str = castle_match.Groups[1].Captures[0].Value;
+                CastleType castle_type;
+                if (castle_type_str == "left") {
+                    castle_type = CastleType.Left;
+                } else if (castle_type_str == "right") {
+                    castle_type = CastleType.Right;
+                } else {
+                    throw new MoveParseException($"Unsupported castle type: {castle_type_str}");
+                }
+                return new CastleMove(engine.ActivePlayer, castle_type);
             } else {
                 throw new MoveParseException("Unable to parse move");
             }

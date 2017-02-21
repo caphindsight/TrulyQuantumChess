@@ -257,6 +257,23 @@ namespace TrulyQuantumChess.Kernel.Quantize {
             AssertionException.Assert(applied, "Quantum move couldn't be applied on any harmonic");
         }
 
+        public bool CheckCastleMoveApplicable(CastleMove move) {
+            return Harmonics_.Any((h) => h.Board.GameState == GameState.GameStillGoing &&
+                                  h.Board.CheckCastleMoveApplicable(move));
+        }
+
+        public void ApplyCastleMove(CastleMove move) {
+            bool applied = false;
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
+                if (harmonic.Board.CheckCastleMoveApplicable(move)) {
+                    harmonic.Board.ApplyCastleMove(move);
+                    applied = true;
+                }
+            }
+            UpdateQuantumCheckboard();
+            AssertionException.Assert(applied, "Ordinary move couldn't be applied on any harmonic");
+        }
+
         public void RegisterVictory(Player player) {
             foreach (QuantumHarmonic harmonic in Harmonics_) {
                 if (harmonic.Board.GameState == GameState.GameStillGoing)

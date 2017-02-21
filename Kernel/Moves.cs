@@ -90,4 +90,26 @@ namespace TrulyQuantumChess.Kernel.Moves {
             get { return ActorPiece_.Player; }
         }
     }
+
+    public enum CastleType {
+        Left, Right
+    }
+
+    public sealed class CastleMove : QuantumChessMove {
+        public CastleMove(Player actorPlayer, CastleType castleType) {
+            ActorPlayer_ = actorPlayer;
+            CastleType_ = castleType;
+        }
+
+        private readonly Player ActorPlayer_;
+        private readonly CastleType CastleType_;
+
+        public override Player ActorPlayer {
+            get { return ActorPlayer_; }
+        }
+
+        public CastleType CastleType {
+            get { return CastleType_; }
+        }
+    }
 }
