@@ -365,6 +365,16 @@ namespace TrulyQuantumChess.Kernel.Chess {
             AssertionException.Assert(CheckOrdinaryMoveApplicable(move), $"Attempted applying inapplicable ordinary move");
             this[move.Target] = this[move.Source];
             this[move.Source] = null;
+
+            if (move.ActorPiece.PieceType == PieceType.Pawn &&
+                (move.Target.Y == 0 || move.Target.Y == 7))
+            {
+                // Pawn entered its final destination, promoting it to a queen
+                AssertionException.Assert(this[move.Target].HasValue && this[move.Target].Value.PieceType == PieceType.Pawn,
+                                          "We just applied the pawn move, but somehow no pawn present at the target square");
+                this[move.Target] = new Piece(this[move.Target].Value.Player, PieceType.Queen);
+            }
+
             if (GameState_ == GameState.GameStillGoing) {
                 bool white_king_present = false;
                 bool black_king_present = false;
@@ -429,6 +439,15 @@ namespace TrulyQuantumChess.Kernel.Chess {
             AssertionException.Assert(CheckQuantumMoveApplicable(move), $"Attempted applying inapplicable quantum move");
             this[move.Target] = this[move.Source];
             this[move.Source] = null;
+
+            if (move.ActorPiece.PieceType == PieceType.Pawn &&
+                            (move.Target.Y == 0 || move.Target.Y == 7))
+            {
+                // Pawn entered its final destination, promoting it to a queen
+                AssertionException.Assert(this[move.Target].HasValue && this[move.Target].Value.PieceType == PieceType.Pawn,
+                                          "We just applied the pawn move, but somehow no pawn present at the target square");
+                this[move.Target] = new Piece(this[move.Target].Value.Player, PieceType.Queen);
+            }
         }
 
         public void RegisterVictory(Player player) {
