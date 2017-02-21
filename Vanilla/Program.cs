@@ -12,7 +12,7 @@ namespace TrulyQuantumChess.Vanilla {
         public static void Main(string[] args) {
             var engine = new QuantumChessEngine();
             for (;;) {
-                Output.DisplayQuantumChessboard(engine.Chessboard, 4);
+                Output.DisplayQuantumChessboard(engine.Chessboard, 8);
 
                 for (;;) {
                     try {

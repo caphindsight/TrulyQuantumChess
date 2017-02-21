@@ -134,7 +134,8 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
                     default:
                         throw new AssertionException($"Unsupported game state: {harmonic.Board.GameState}");
                 }
-                Console.Write($"   {win_str} x{harmonic.Degeneracy}");
+                string deg = harmonic.Degeneracy == 1 ? "  " : $"x{harmonic.Degeneracy}";
+                Console.Write($"   {win_str} {deg}");
                 int expected_ln = 8;
                 int actual_ln = harmonic.Degeneracy.ToString().Length;
                 for (int i = actual_ln; i != expected_ln; i++)
