@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kernel", "Kernel\Kernel.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vanilla", "Vanilla\Vanilla.csproj", "{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{31354668-3E37-46C5-BE82-66F09A09D9BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE55A203-1CFD-44B8-88DE-BBB9F58A90B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31354668-3E37-46C5-BE82-66F09A09D9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31354668-3E37-46C5-BE82-66F09A09D9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31354668-3E37-46C5-BE82-66F09A09D9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31354668-3E37-46C5-BE82-66F09A09D9BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
