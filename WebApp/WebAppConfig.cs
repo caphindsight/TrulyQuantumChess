@@ -17,6 +17,5 @@ namespace TrulyQuantumChess.WebApp {
         }
 
         public string ListenUrl { get; private set; }
-        public string ApiRoute { get; private set; }
     }
 }
