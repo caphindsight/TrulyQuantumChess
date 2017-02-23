@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>Truly Quantum Chess</title>
+		<meta name="keywords" content="quantum,chess" />
+		<meta name="author" content="Cap. Hindsight &lt;hindsight@yandex.ru&gt;" />
+		<meta charset="utf8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="ha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="/content/stylesheet.css" />
+		@Section['Head'];
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<h1 class="centered">
+					Truly quantum chess <small>alpha</small>
+				</h1>
+				<p class="lead centered">
+					The thousand-years-old game of chess meets quantum physics.
+				</p>
+			</div>
+			<div class="row">
+				@Section['Body'];
+			</div>
+		</div>
+	</body>
+</html>

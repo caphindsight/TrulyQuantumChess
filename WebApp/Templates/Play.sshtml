@@ -1,0 +1,88 @@
+﻿@Master['Master.sshtml']
+
+@Section['Body']
+	<div class="chessboard-container" align="center">
+		<table class="chessboard">
+			<tr>
+				<td id="sq-A8" class="square-white"></td>
+				<td id="sq-B8" class="square-black"></td>
+				<td id="sq-C8" class="square-white"></td>
+				<td id="sq-D8" class="square-black"></td>
+				<td id="sq-E8" class="square-white"></td>
+				<td id="sq-F8" class="square-black"></td>
+				<td id="sq-G8" class="square-white"></td>
+				<td id="sq-H8" class="square-black"></td>
+			</tr>
+			<tr>
+				<td id="sq-A7" class="square-black"></td>
+				<td id="sq-B7" class="square-white"></td>
+				<td id="sq-C7" class="square-black"></td>
+				<td id="sq-D7" class="square-white"></td>
+				<td id="sq-E7" class="square-black"></td>
+				<td id="sq-F7" class="square-white"></td>
+				<td id="sq-G7" class="square-black"></td>
+				<td id="sq-H7" class="square-white"></td>
+			</tr>
+			<tr>
+				<td id="sq-A6" class="square-white"></td>
+				<td id="sq-B6" class="square-black"></td>
+				<td id="sq-C6" class="square-white"></td>
+				<td id="sq-D6" class="square-black"></td>
+				<td id="sq-E6" class="square-white"></td>
+				<td id="sq-F6" class="square-black"></td>
+				<td id="sq-G6" class="square-white"></td>
+				<td id="sq-H6" class="square-black"></td>
+			</tr>
+			<tr>
+				<td id="sq-A5" class="square-black"></td>
+				<td id="sq-B5" class="square-white"></td>
+				<td id="sq-C5" class="square-black"></td>
+				<td id="sq-D5" class="square-white"></td>
+				<td id="sq-E5" class="square-black"></td>
+				<td id="sq-F5" class="square-white"></td>
+				<td id="sq-G5" class="square-black"></td>
+				<td id="sq-H5" class="square-white"></td>
+			</tr>
+			<tr>
+				<td id="sq-A4" class="square-white"></td>
+				<td id="sq-B4" class="square-black"></td>
+				<td id="sq-C4" class="square-white"></td>
+				<td id="sq-D4" class="square-black"></td>
+				<td id="sq-E4" class="square-white"></td>
+				<td id="sq-F4" class="square-black"></td>
+				<td id="sq-G4" class="square-white"></td>
+				<td id="sq-H4" class="square-black"></td>
+			</tr>
+			<tr>
+				<td id="sq-A3" class="square-black"></td>
+				<td id="sq-B3" class="square-white"></td>
+				<td id="sq-C3" class="square-black"></td>
+				<td id="sq-D3" class="square-white"></td>
+				<td id="sq-E3" class="square-black"></td>
+				<td id="sq-F3" class="square-white"></td>
+				<td id="sq-G3" class="square-black"></td>
+				<td id="sq-H3" class="square-white"></td>
+			</tr>
+			<tr>
+				<td id="sq-A2" class="square-white"></td>
+				<td id="sq-B2" class="square-black"></td>
+				<td id="sq-C2" class="square-white"></td>
+				<td id="sq-D2" class="square-black"></td>
+				<td id="sq-E2" class="square-white"></td>
+				<td id="sq-F2" class="square-black"></td>
+				<td id="sq-G2" class="square-white"></td>
+				<td id="sq-H2" class="square-black"></td>
+			</tr>
+			<tr>
+				<td id="sq-A1" class="square-black"></td>
+				<td id="sq-B1" class="square-white"></td>
+				<td id="sq-C1" class="square-black"></td>
+				<td id="sq-D1" class="square-white"></td>
+				<td id="sq-E1" class="square-black"></td>
+				<td id="sq-F1" class="square-white"></td>
+				<td id="sq-G1" class="square-black"></td>
+				<td id="sq-H1" class="square-white"></td>
+			</tr>
+		</table>
+	</div>
+@EndSection

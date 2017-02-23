@@ -1,0 +1,42 @@
+﻿body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.centered {
+    text-align: center;
+}
+
+.center-of-screen {
+    height: 34px;
+    width: 150px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -17px;
+    margin-left: -75px;
+}
+
+.chessboard-container {
+    padding-top: 50px;
+}
+
+table.chessboard {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 320px;
+}
+
+table.chessboard td {
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+}
+
+.square-black {
+    background-color: #d3d3d3;
+}
+
+.square-white {
+    background-color: #ffffe0;
+};

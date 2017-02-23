@@ -1,0 +1,5 @@
+﻿@Master['Master.sshtml']
+
+@Section['Body']
+	<a class="btn btn-primary center-of-screen" href="/play">Play with friend</a>
+@EndSection

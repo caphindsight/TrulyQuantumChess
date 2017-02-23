@@ -7,14 +7,16 @@ namespace TrulyQuantumChess.WebApp {
         public HtmlModule()
             : base("/")
         {
-            Get["/"] = Hello;
+            Get["/"] = Index;
+            Get["/play"] = Play;
         }
 
-        private dynamic Hello(dynamic args) {
-            var model = new {
-                Name = "Nancy"
-            };
-            return View["Hello.sshtml", model];
+        private dynamic Index(dynamic args) {
+            return View["Index.sshtml"];
+        }
+
+        private dynamic Play(dynamic args) {
+            return View["Play.sshtml"];
         }
     }
 }
