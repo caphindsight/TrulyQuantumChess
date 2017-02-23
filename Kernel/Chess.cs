@@ -20,6 +20,14 @@ namespace TrulyQuantumChess.Kernel.Chess {
                     throw new AssertionException($"Unsupported player: {player}");
             }
         }
+
+        public static string PlayerToString(Player player) {
+            switch (player) {
+                case Player.White: return "white";
+                case Player.Black: return "black";
+                default: throw new AssertionException($"Unsupported player: {player}");
+            }
+        }
     }
 
     public enum PieceType {
@@ -29,6 +37,20 @@ namespace TrulyQuantumChess.Kernel.Chess {
         Rook,
         Queen,
         King
+    }
+
+    public static class PieceTypeUtils {
+        public static string PieceTypeToString(PieceType piece_type) {
+            switch (piece_type) {
+                case PieceType.Pawn: return "pawn";
+                case PieceType.Knight: return "knight";
+                case PieceType.Bishop: return "bishop";
+                case PieceType.Rook: return "rook";
+                case PieceType.Queen: return "queen";
+                case PieceType.King: return "king";
+                default: throw new AssertionException($"Unsupported piece type: {piece_type}");
+            }
+        }
     }
 
     public struct Piece {
@@ -134,6 +156,18 @@ namespace TrulyQuantumChess.Kernel.Chess {
         WhiteVictory,
         BlackVictory,
         Tie
+    }
+
+    public static class GameStateUtils {
+        public static string GameStateToString(GameState game_state) {
+            switch (game_state) {
+                case GameState.GameStillGoing: return "game_still_going";
+                case GameState.WhiteVictory: return "white_victory";
+                case GameState.BlackVictory: return "black_victory";
+                case GameState.Tie: return "tie";
+                default: throw new AssertionException($"Unsupported game state: {game_state}");
+            }
+        }
     }
 
     public class Chessboard {

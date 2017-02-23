@@ -44,6 +44,8 @@
     <Compile Include="WebAppConfig.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="HtmlModule.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,6 +68,12 @@
   <ItemGroup>
     <Folder Include="Templates\" />
     <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kernel\Kernel.csproj">
+      <Project>{B4B23590-B467-4F12-929B-313A2025613E}</Project>
+      <Name>Kernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
