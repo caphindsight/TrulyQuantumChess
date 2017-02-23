@@ -1,0 +1,18 @@
+include _utils.jade
+
+doctype html
+html(lang="eng")
+  head
+    meta(name="keywords", content="quantum,chess")
+    meta(name="author", content="Cap. Hindsight <hindsight@yandex.ru>")
+    +setup_bootstrap
+    +setup_stylesheet("stylesheet.css")
+    +setup_script("script.js")
+    block head
+  body
+    .container
+      .row
+        h1.centered Truly quantum chess #[small alpha]
+        p.lead.centered The thousand-years-old game of chess meets quantum physics.
+      .row
+        block body
