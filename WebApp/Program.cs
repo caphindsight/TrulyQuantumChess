@@ -7,7 +7,7 @@ using Nancy.Hosting.Self;
 namespace TrulyQuantumChess.WebApp {
     public static class Program {
         public static void Main(string[] args) {
-            var uri = new Uri("http://127.0.0.1:9000");
+            var uri = new Uri(WebAppConfig.Instance.ListenUrl);
             using (var host = new NancyHost(uri)) {
                 host.Start();
                 Console.WriteLine($"Listening on {uri}..");
