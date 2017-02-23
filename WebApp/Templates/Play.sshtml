@@ -1,87 +1,95 @@
 ﻿@Master['Master.sshtml']
 
+@Section['Head']
+	<script src="/content/game.js"></script>
+@EndSection
+
 @Section['Body']
 	<div class="chessboard-container" align="center">
+		Game state: <span id="game_state">game_still_going</span>
+		<br>
+		Active player: <span id="active_player"></span>
+		<br> <br>
 		<table class="chessboard">
 			<tr>
-				<td id="sq-A8" class="square-white"></td>
-				<td id="sq-B8" class="square-black"></td>
-				<td id="sq-C8" class="square-white"></td>
-				<td id="sq-D8" class="square-black"></td>
-				<td id="sq-E8" class="square-white"></td>
-				<td id="sq-F8" class="square-black"></td>
-				<td id="sq-G8" class="square-white"></td>
-				<td id="sq-H8" class="square-black"></td>
+				<td id="sq-a8" class="square-white"></td>
+				<td id="sq-b8" class="square-black"></td>
+				<td id="sq-c8" class="square-white"></td>
+				<td id="sq-d8" class="square-black"></td>
+				<td id="sq-e8" class="square-white"></td>
+				<td id="sq-f8" class="square-black"></td>
+				<td id="sq-g8" class="square-white"></td>
+				<td id="sq-h8" class="square-black"></td>
 			</tr>
 			<tr>
-				<td id="sq-A7" class="square-black"></td>
-				<td id="sq-B7" class="square-white"></td>
-				<td id="sq-C7" class="square-black"></td>
-				<td id="sq-D7" class="square-white"></td>
-				<td id="sq-E7" class="square-black"></td>
-				<td id="sq-F7" class="square-white"></td>
-				<td id="sq-G7" class="square-black"></td>
-				<td id="sq-H7" class="square-white"></td>
+				<td id="sq-a7" class="square-black"></td>
+				<td id="sq-b7" class="square-white"></td>
+				<td id="sq-c7" class="square-black"></td>
+				<td id="sq-d7" class="square-white"></td>
+				<td id="sq-e7" class="square-black"></td>
+				<td id="sq-f7" class="square-white"></td>
+				<td id="sq-g7" class="square-black"></td>
+				<td id="sq-h7" class="square-white"></td>
 			</tr>
 			<tr>
-				<td id="sq-A6" class="square-white"></td>
-				<td id="sq-B6" class="square-black"></td>
-				<td id="sq-C6" class="square-white"></td>
-				<td id="sq-D6" class="square-black"></td>
-				<td id="sq-E6" class="square-white"></td>
-				<td id="sq-F6" class="square-black"></td>
-				<td id="sq-G6" class="square-white"></td>
-				<td id="sq-H6" class="square-black"></td>
+				<td id="sq-a6" class="square-white"></td>
+				<td id="sq-b6" class="square-black"></td>
+				<td id="sq-c6" class="square-white"></td>
+				<td id="sq-d6" class="square-black"></td>
+				<td id="sq-e6" class="square-white"></td>
+				<td id="sq-f6" class="square-black"></td>
+				<td id="sq-g6" class="square-white"></td>
+				<td id="sq-h6" class="square-black"></td>
 			</tr>
 			<tr>
-				<td id="sq-A5" class="square-black"></td>
-				<td id="sq-B5" class="square-white"></td>
-				<td id="sq-C5" class="square-black"></td>
-				<td id="sq-D5" class="square-white"></td>
-				<td id="sq-E5" class="square-black"></td>
-				<td id="sq-F5" class="square-white"></td>
-				<td id="sq-G5" class="square-black"></td>
-				<td id="sq-H5" class="square-white"></td>
+				<td id="sq-a5" class="square-black"></td>
+				<td id="sq-b5" class="square-white"></td>
+				<td id="sq-c5" class="square-black"></td>
+				<td id="sq-d5" class="square-white"></td>
+				<td id="sq-e5" class="square-black"></td>
+				<td id="sq-f5" class="square-white"></td>
+				<td id="sq-g5" class="square-black"></td>
+				<td id="sq-h5" class="square-white"></td>
 			</tr>
 			<tr>
-				<td id="sq-A4" class="square-white"></td>
-				<td id="sq-B4" class="square-black"></td>
-				<td id="sq-C4" class="square-white"></td>
-				<td id="sq-D4" class="square-black"></td>
-				<td id="sq-E4" class="square-white"></td>
-				<td id="sq-F4" class="square-black"></td>
-				<td id="sq-G4" class="square-white"></td>
-				<td id="sq-H4" class="square-black"></td>
+				<td id="sq-a4" class="square-white"></td>
+				<td id="sq-b4" class="square-black"></td>
+				<td id="sq-c4" class="square-white"></td>
+				<td id="sq-d4" class="square-black"></td>
+				<td id="sq-e4" class="square-white"></td>
+				<td id="sq-f4" class="square-black"></td>
+				<td id="sq-g4" class="square-white"></td>
+				<td id="sq-h4" class="square-black"></td>
 			</tr>
 			<tr>
-				<td id="sq-A3" class="square-black"></td>
-				<td id="sq-B3" class="square-white"></td>
-				<td id="sq-C3" class="square-black"></td>
-				<td id="sq-D3" class="square-white"></td>
-				<td id="sq-E3" class="square-black"></td>
-				<td id="sq-F3" class="square-white"></td>
-				<td id="sq-G3" class="square-black"></td>
-				<td id="sq-H3" class="square-white"></td>
+				<td id="sq-a3" class="square-black"></td>
+				<td id="sq-b3" class="square-white"></td>
+				<td id="sq-c3" class="square-black"></td>
+				<td id="sq-d3" class="square-white"></td>
+				<td id="sq-e3" class="square-black"></td>
+				<td id="sq-f3" class="square-white"></td>
+				<td id="sq-g3" class="square-black"></td>
+				<td id="sq-h3" class="square-white"></td>
 			</tr>
 			<tr>
-				<td id="sq-A2" class="square-white"></td>
-				<td id="sq-B2" class="square-black"></td>
-				<td id="sq-C2" class="square-white"></td>
-				<td id="sq-D2" class="square-black"></td>
-				<td id="sq-E2" class="square-white"></td>
-				<td id="sq-F2" class="square-black"></td>
-				<td id="sq-G2" class="square-white"></td>
-				<td id="sq-H2" class="square-black"></td>
+				<td id="sq-a2" class="square-white"></td>
+				<td id="sq-b2" class="square-black"></td>
+				<td id="sq-c2" class="square-white"></td>
+				<td id="sq-d2" class="square-black"></td>
+				<td id="sq-e2" class="square-white"></td>
+				<td id="sq-f2" class="square-black"></td>
+				<td id="sq-g2" class="square-white"></td>
+				<td id="sq-h2" class="square-black"></td>
 			</tr>
 			<tr>
-				<td id="sq-A1" class="square-black"></td>
-				<td id="sq-B1" class="square-white"></td>
-				<td id="sq-C1" class="square-black"></td>
-				<td id="sq-D1" class="square-white"></td>
-				<td id="sq-E1" class="square-black"></td>
-				<td id="sq-F1" class="square-white"></td>
-				<td id="sq-G1" class="square-black"></td>
-				<td id="sq-H1" class="square-white"></td>
+				<td id="sq-a1" class="square-black"></td>
+				<td id="sq-b1" class="square-white"></td>
+				<td id="sq-c1" class="square-black"></td>
+				<td id="sq-d1" class="square-white"></td>
+				<td id="sq-e1" class="square-black"></td>
+				<td id="sq-f1" class="square-white"></td>
+				<td id="sq-g1" class="square-black"></td>
+				<td id="sq-h1" class="square-white"></td>
 			</tr>
 		</table>
 	</div>
