@@ -1,4 +1,6 @@
-﻿function draw(canvas, data) {
+﻿var source = "";
+
+function draw(canvas, data) {
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (data != null) {
@@ -29,4 +31,26 @@ function update_chessboard() {
 
 $(function() {
     update_chessboard();
+    setInterval(update_chessboard, 5000);
+    var rows = "abcdefgh";
+    for (var x_i in rows) {
+        var x = rows[x_i];
+        for (var y = 1; y <= 8; y++) {
+            $("#sq-" + x + y).click(function(e) {
+                var $elem = $(e.target);
+                var pos = e.target.id[3] + e.target.id[4];
+                if (source == "") {
+                    source = pos;
+                    $elem.addClass("square-source");
+                } else if (source == pos) {
+                    source = "";
+                    $elem.removeClass("square-source");
+                } else {
+                    alert("Making moves isn't implemented yet :(");
+                    $("#sq-" + source).removeClass("square-source");
+                    source = "";
+                }
+            });
+        }
+    }
 });

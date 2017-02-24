@@ -36,16 +36,19 @@ table.chessboard td {
 }
 
 table.chessboard td canvas {
-    overflow: hidden;
     width: 40px;
     height: 40px;
     vertical-align: bottom;
 }
 
-.square-black {
+.square-black:not(.square-source) {
     background-color: #d3d3d3;
 }
 
-.square-white {
+.square-white:not(.square-source) {
     background-color: #ffffe0;
-};
+}
+
+.square-source {
+    background-color: #99ff99;
+}
