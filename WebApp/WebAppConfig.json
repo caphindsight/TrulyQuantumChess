@@ -1,6 +1,6 @@
 ﻿{
     "ListenUrl" : "http://localhost:9000",
     "Prefix": "/truly-quantum-chess",
-    "CleanAfterHours": 2,
+    "CleanAfterHours": 0.5,
     "Mode": "debug"
 }
