@@ -1,5 +1,9 @@
 ﻿@Master['Master.sshtml']
 
+@Section['Head']
+	<script src="/content/index.js"></script>
+@EndSection
+
 @Section['Body']
-	<a class="btn btn-primary center-of-screen" href="/play">Play with friend</a>
+	<button id="play_btn" class="btn btn-primary center-of-screen">Play with friend</button>
 @EndSection

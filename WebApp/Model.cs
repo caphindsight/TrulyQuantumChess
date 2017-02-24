@@ -8,6 +8,7 @@ using TrulyQuantumChess.Kernel.Engine;
 
 namespace TrulyQuantumChess.WebApp.Model {
     public class MoveRequest {
+        public string GameId;
         public string MoveType;
         public string Source;
         public string Middle;
@@ -28,7 +29,7 @@ namespace TrulyQuantumChess.WebApp.Model {
                 if (!String.IsNullOrEmpty(Middle))
                     middle = Position.Parse(Middle);
                 Position target = Position.Parse(Target);
-                Piece? piece = engine.Chessboard.GetQuantumPiece(target).Piece;
+                Piece? piece = engine.Chessboard.GetQuantumPiece(source).Piece;
                 if (piece.HasValue)
                     return new QuantumMove(piece.Value, source, middle, target);
                 else

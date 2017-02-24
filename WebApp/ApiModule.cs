@@ -1,6 +1,9 @@
 ﻿using System;
 
+using TrulyQuantumChess.Kernel.Errors;
+
 using Nancy;
+using Nancy.ModelBinding;
 
 namespace TrulyQuantumChess.WebApp {
     public class ApiModule : NancyModule {
@@ -9,6 +12,7 @@ namespace TrulyQuantumChess.WebApp {
         {
             Get["/new_game"] = NewGame;
             Get["/game_info"] = GameInfo;
+            Post["/submit_move"] = SubmitMove;
         }
 
         private dynamic NewGame(dynamic args) {
@@ -20,9 +24,25 @@ namespace TrulyQuantumChess.WebApp {
         }
 
         private dynamic GameInfo(dynamic args) {
-            var game_id = new GameId(Request.Query["game_id"]);
+            var game_id = new GameId(Request.Query["gameId"]);
             Game game = Games.FindGame(game_id);
             return Response.AsJson<Model.InfoResponse>(game.Info());
+        }
+
+        private dynamic SubmitMove(dynamic args) {
+            Model.MoveRequest request = this.Bind<Model.MoveRequest>();
+            try {
+                var game_id = new GameId(request.GameId);
+                Games.FindGame(game_id).Submit(request);
+                return new {
+                    Success = true
+                };
+            } catch (QuantumChessException e) {
+                return new {
+                    Success = false,
+                    Message = e.Message
+                };
+            }
         }
     }
 }

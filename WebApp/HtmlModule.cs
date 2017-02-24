@@ -16,7 +16,10 @@ namespace TrulyQuantumChess.WebApp {
         }
 
         private dynamic Play(dynamic args) {
-            return View["Play.sshtml"];
+            var model = new {
+                GameId = Request.Query["gameId"]
+            };
+            return View["Play.sshtml", model];
         }
     }
 }

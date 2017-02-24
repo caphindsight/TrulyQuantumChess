@@ -1,7 +1,10 @@
 ﻿@Master['Master.sshtml']
 
 @Section['Head']
-	<script src="/content/game.js"></script>
+	<script src="/content/play.js"></script>
+	<script>
+		var gameId = "@Model.GameId";
+	</script>
 @EndSection
 
 @Section['Body']
