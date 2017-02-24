@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Nancy;
+using Nancy.Conventions;
 
 namespace TrulyQuantumChess.WebApp {
     public class Bootstrapper : DefaultNancyBootstrapper {
@@ -11,6 +12,9 @@ namespace TrulyQuantumChess.WebApp {
             Conventions.ViewLocationConventions.Add((viewName, model, context) => {
                 return String.Concat("Templates/", viewName);
             });
+            Conventions.StaticContentsConventions.Add(
+                StaticContentConventionBuilder.AddDirectory(WebAppConfig.Instance.Prefix + "/content", "/Content")
+            );
         }
     }
 }

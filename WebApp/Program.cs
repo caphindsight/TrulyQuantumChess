@@ -7,11 +7,28 @@ using Nancy.Hosting.Self;
 namespace TrulyQuantumChess.WebApp {
     public static class Program {
         public static void Main(string[] args) {
-            StaticConfiguration.DisableErrorTraces = false;
+            var cleaner = new Thread(() => {
+                try {
+                    for (;;) {
+                        try {
+                            Games.Clean();
+                        } catch (ThreadAbortException) {
+                            throw;
+                        } catch (Exception e) {
+                            Console.WriteLine($"Error occured while cleaning: {e}");
+                        }
+                        Thread.Sleep(TimeSpan.FromMinutes(5));
+                    }
+                } catch (ThreadAbortException) {}
+            });
+
+            StaticConfiguration.DisableErrorTraces = WebAppConfig.Instance.Mode != "debug";
             var uri = new Uri(WebAppConfig.Instance.ListenUrl);
             using (var host = new NancyHost(uri)) {
                 host.Start();
                 Console.WriteLine($"Listening on {uri}..");
+
+                cleaner.Start();
 
                 long host_alive = 1;
 
@@ -33,6 +50,8 @@ namespace TrulyQuantumChess.WebApp {
 
                 abort:
                 host.Stop();
+                cleaner.Abort();
+                cleaner.Join();
                 Console.WriteLine("Bye.");
             }
         }

@@ -8,7 +8,7 @@ using Nancy.ModelBinding;
 namespace TrulyQuantumChess.WebApp {
     public class ApiModule : NancyModule {
         public ApiModule()
-            : base("/api")
+            : base(WebAppConfig.Instance.Prefix + "/api")
         {
             Get["/new_game"] = NewGame;
             Get["/game_info"] = GameInfo;

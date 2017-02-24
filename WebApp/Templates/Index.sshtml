@@ -1,14 +1,14 @@
 ﻿@Master['Master.sshtml']
 
 @Section['Head']
-	<script src="/content/index.js"></script>
+	<script src="@Model.Prefix/content/index.js"></script>
 @EndSection
 
 @Section['Body']
 	<div class="centered">
-		<img src="/content/logo.png"></img>
+		<img src="@Model.Prefix/content/logo.png"></img>
 		<br><br>
 		<button id="play_btn" class="btn btn-primary">Play with friend</button>
-		<a href="/rules" class="btn btn-default">Rules of quantum chess</a>
+		<a href="@Model.Prefix/rules" class="btn btn-default">Rules of quantum chess</a>
 	</div>
 @EndSection

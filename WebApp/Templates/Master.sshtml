@@ -10,7 +10,10 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous" />
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" type="text/css" href="/content/stylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="@Model.Prefix/content/stylesheet.css" />
+		<script>
+			var prefix = "@Model.Prefix";
+		</script>
 		@Section['Head'];
 	</head>
 	<body>

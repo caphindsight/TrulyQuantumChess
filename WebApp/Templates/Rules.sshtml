@@ -2,7 +2,7 @@
 
 @Section['Body']
 	<div class="centered">
-		<a href="/" class="btn btn-default">Return to lobby</a>
+		<a href="@Model.Prefix" class="btn btn-default">Return to lobby</a>
 	</div>
 	<br>
 	<h1>Rules of Quantum Chess</h1>

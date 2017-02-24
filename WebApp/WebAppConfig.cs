@@ -17,5 +17,8 @@ namespace TrulyQuantumChess.WebApp {
         }
 
         public string ListenUrl { get; private set; }
+        public string Prefix { get; private set; }
+        public double CleanAfterHours { get; private set; }
+        public string Mode { get; private set; }
     }
 }

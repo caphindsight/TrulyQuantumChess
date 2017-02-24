@@ -50,9 +50,11 @@ namespace TrulyQuantumChess.WebApp {
     public class Game {
         public Game(QuantumChessEngine engine) {
             Engine_ = engine;
+            LastAccess = DateTime.Now;
         }
 
         private readonly QuantumChessEngine Engine_;
+        public DateTime LastAccess;
 
         public static Game NewGame() {
             var engine = new QuantumChessEngine();
@@ -97,10 +99,12 @@ namespace TrulyQuantumChess.WebApp {
         public static Game FindGame(GameId game_id) {
             lock (Games_) {
                 Game game;
-                if (Games_.TryGetValue(game_id, out game))
+                if (Games_.TryGetValue(game_id, out game)) {
+                    game.LastAccess = DateTime.Now;
                     return game;
-                else
+                } else {
                     throw new GameNotFoundException($"Game not found: {game_id}");
+                }
             }
         }
 
@@ -109,6 +113,17 @@ namespace TrulyQuantumChess.WebApp {
                 var id = new GameId(Guid.NewGuid().ToString());
                 Games_[id] = Game.NewGame();
                 return id;
+            }
+        }
+
+        public static void Clean() {
+            lock (Games_) {
+                foreach (GameId key in Games_.Keys) {
+                    Game game = Games_[key];
+                    TimeSpan ts = DateTime.Now - game.LastAccess;
+                    if (ts.TotalHours > WebAppConfig.Instance.CleanAfterHours)
+                        Games_.Remove(key);
+                }
             }
         }
     }

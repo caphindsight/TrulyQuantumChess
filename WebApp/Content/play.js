@@ -17,7 +17,7 @@ function reset_move() {
 function submit_move() {
     if (move.middle == move.source || move.middle == move.target)
         move.middle = "";
-    $.post("/api/submit_move", {
+    $.post(prefix + "/api/submit_move", {
          "gameId": gameId,
          "moveType": move.move_type,
          "source": move.source,
@@ -42,14 +42,14 @@ function draw(canvas, data) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (data != null) {
         var img_alive = new Image();
-        img_alive.src = "/content/pieces/" + data.player + "_" + data.piece + "_alive.png";
+        img_alive.src = prefix + "/content/pieces/" + data.player + "_" + data.piece + "_alive.png";
         img_alive.onload = function() {
             ctx.drawImage(img_alive, 0, 0, img_alive.width * data.probability, img_alive.height,
                 0, 0, canvas.width * data.probability, canvas.height);
         };
 
         var img_dead = new Image();
-        img_dead.src = "/content/pieces/" + data.player + "_" + data.piece + "_dead.png";
+        img_dead.src = prefix + "/content/pieces/" + data.player + "_" + data.piece + "_dead.png";
         img_dead.onload = function() {
             ctx.drawImage(img_dead, img_dead.width * data.probability, 0, img_dead.width * (1.0 - data.probability), img_dead.height,
                 canvas.width * data.probability, 0, canvas.width * (1.0 - data.probability), canvas.height);
@@ -58,7 +58,7 @@ function draw(canvas, data) {
 }
 
 function update_chessboard() {
-    var board = $.get("/api/game_info", {"gameId": gameId}, function(data) {
+    var board = $.get(prefix + "/api/game_info", {"gameId": gameId}, function(data) {
         if (data.gameState != "game_still_going") {
             $(".chessboard").addClass("game-over");
             var message = "???";
