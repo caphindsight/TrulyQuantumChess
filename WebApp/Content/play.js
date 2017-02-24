@@ -1,13 +1,19 @@
 ﻿function draw($square, data) {
     $square.val("");
     if (data != null) {
-        $square.val(data.player[0] + data.piece[0] + " " + data.probability);
+        $square.html('<img src="content/pieces/' + data.player + '_' + data.piece + '_alive.png" width="100%" height="100%"></img>');
     }
 }
 
-function initialize_chessboard(board) {
-    $("#game_state").val(board.gameState);
-    $("#active_player").val(board.activePlayer);
-    for (var pos in board.squares)
-        draw($("#sq-" + pos), board.squares[pos]);
+function update_chessboard() {
+    var board = $.get("/api/game_info", {"gameId": gameId}, function(data) {
+        $("#game_state").val(data.gameState);
+        $("#active_player").val(data.activePlayer);
+        for (var pos in data.squares)
+            draw($("#sq-" + pos), data.squares[pos]);
+    });
 }
+
+$(function() {
+    update_chessboard();
+});
