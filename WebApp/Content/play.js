@@ -7,8 +7,8 @@
 
 function update_chessboard() {
     var board = $.get("/api/game_info", {"gameId": gameId}, function(data) {
-        $("#game_state").val(data.gameState);
-        $("#active_player").val(data.activePlayer);
+        $("#game_state").html(data.gameState);
+        $("#active_player").html(data.activePlayer);
         for (var pos in data.squares)
             draw($("#sq-" + pos), data.squares[pos]);
     });
