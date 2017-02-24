@@ -14,6 +14,45 @@ function reset_move() {
     $(".square-selected-quantum").removeClass("square-selected-quantum");
 }
 
+var prev_chessboard = null;
+
+function chessboards_equal(a, b) {
+    if (a == null && b == null) {
+        return true;
+    } else if (a == null && b != null) {
+        return false;
+    } else if (a != null && b == null) {
+        return false;
+    } else {
+        if (a.gameState != b.gameState)
+            return false;
+        if (a.activePlayer != b.activePlayer)
+            return false;
+        var rows = "abcdefgh";
+        for (var x_i in rows) {
+            var x = rows[x_i];
+            for (var y = 1; y <= 8; y++) {
+                var pos = x + y;
+                if (a.squares[pos] == null && b.squares[pos] == null) {
+                    continue;
+                } else if (a.squares[pos] == null && b.squares[pos] != null) {
+                    return false;
+                } else if (a.squares[pos] != null && b.squares[pos] == null) {
+                    return false;
+                } else {
+                    if (a.squares[pos].player != b.squares[pos].player)
+                        return false;
+                    if (a.squares[pos].piece != b.squares[pos].piece)
+                        return false;
+                    if (a.squares[pos].probability != b.squares[pos].probability)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
 function submit_move() {
     if (move.middle == move.source || move.middle == move.target)
         move.middle = "";
@@ -59,6 +98,9 @@ function draw(canvas, data) {
 
 function update_chessboard() {
     var board = $.get(prefix + "/api/game_info", {"gameId": gameId}, function(data) {
+        if (chessboards_equal(prev_chessboard, data))
+            return;
+        prev_chessboard = data;
         if (data.gameState != "game_still_going") {
             $(".chessboard").addClass("game-over");
             var message = "???";
