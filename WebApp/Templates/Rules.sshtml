@@ -9,7 +9,7 @@
 	<h2>Moves in quantum chess</h2>
 	<h3>Ordinary moves</h3>
 	<p> <strong>TL;DR:</strong> all pieces mimic the pieces from ordinary chess.
-	<p> The <em>quantum king</em> moves exactly one square horizontally, vertially or diagonally. In quantum chess, you can castle any number of times, and you can castle even if your king is in check. You will find more about castling in this document below.
+	<p> The <em>quantum king</em> moves exactly one square horizontally, vertically or diagonally. In quantum chess, you can castle any number of times, and you can castle even if your king is in check. You will find more about castling in this document below.
 	<p> The <em>quantum rook</em> moves any number of vacant squares horizontally or vertically. Rooks are involved in castling.
 	<p> The <em>quantum bishop</em> moves any number of vacant squares diagonally.
 	<p> The <em>quantum queen</em> can move horizontally, vertically, or diagonally.
@@ -64,7 +64,7 @@
 
 	<h3>Capturing with superposed pieces</h3>
 	<p> Another situation arises when you capture <em>with</em> superposed pieces. Generally, this would leave the position of capture in a superposition of opponent's original piece and your piece which makes the capture.
-	<p> These kinds of superpositions aren't allowed by the rules of the game. In this situations a measurement occurs, which throws away some chessboards. The measurement decides whether the capture succeeded or failed.
+	<p> These kinds of superpositions aren't allowed by the rules of the game. In these situations a measurement occurs, which throws away some chessboards. The measurement decides whether the capture succeeded or failed.
 	<p> When a measurement is made, the probabilities of pieces are respected. For example, you have a 50% chance of capturing with a piece with 50% presence.
 
 	<h3>When do measurements occur?</h3>
@@ -75,7 +75,7 @@
 	<p> To popularize one of the most exciting aspects of the real world; to enable everybody to play around with the rules of quantum physics; to have fun.
 
 	<h3>Who stands behind it?</h3>
-	<p> I am unsure who stands behind the idea of quantum chess, but this implementation was made by a small group of enthusiasts. You can reach us at <a href="mailto:solenodonus@gmail.com">solenodonus@gmail.com</a>. Also, check out my <a href="http://solenodonus.com">blog on theoretical phycs</a>.
+	<p> I am unsure who stands behind the idea of quantum chess, but this implementation was made by a small group of enthusiasts. You can reach us at <a href="mailto:solenodonus@gmail.com">solenodonus@gmail.com</a>. Also, check out my <a href="http://solenodonus.com">blog on theoretical physics</a>.
 
 	<h3>Feedback and bug reports</h3>
 	<p> Can be sent to <a href="mailto:solenodonus@gmail.com">solenodonus@gmail.com</a>. However, keep in mind that this game is in early alpha. There's a good chance that we already know about the bug, but haven't had time to fix it yet.

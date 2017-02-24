@@ -9,7 +9,7 @@
 
 @Section['Body']
 	<div class="chessboard-container" align="center">
-		<span id="game_state">Copy the page URL and send it to your friend</span>
+		<span id="game_state">Copy the URL of this page and send it to your friend</span>
 		<br>
 		<div id="new_game" hidden="true">
 			<a href="@Model.Prefix" class="btn btn-default">New game</a>
