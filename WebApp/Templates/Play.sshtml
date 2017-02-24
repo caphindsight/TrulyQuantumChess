@@ -9,90 +9,90 @@
 
 @Section['Body']
 	<div class="chessboard-container" align="center">
-		Game state: <span id="game_state">game_still_going</span>
+		Game state: <span id="game_state">idle</span>
 		<br>
-		Active player: <span id="active_player"></span>
+		Active player: <span id="active_player">-</span>
 		<br> <br>
 		<table class="chessboard">
 			<tr>
-				<td id="sq-a8" class="square-white"></td>
-				<td id="sq-b8" class="square-black"></td>
-				<td id="sq-c8" class="square-white"></td>
-				<td id="sq-d8" class="square-black"></td>
-				<td id="sq-e8" class="square-white"></td>
-				<td id="sq-f8" class="square-black"></td>
-				<td id="sq-g8" class="square-white"></td>
-				<td id="sq-h8" class="square-black"></td>
+				<td> <canvas id="sq-a8" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-b8" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-c8" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-d8" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-e8" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-f8" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-g8" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-h8" class="square-black"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a7" class="square-black"></td>
-				<td id="sq-b7" class="square-white"></td>
-				<td id="sq-c7" class="square-black"></td>
-				<td id="sq-d7" class="square-white"></td>
-				<td id="sq-e7" class="square-black"></td>
-				<td id="sq-f7" class="square-white"></td>
-				<td id="sq-g7" class="square-black"></td>
-				<td id="sq-h7" class="square-white"></td>
+				<td> <canvas id="sq-a7" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-b7" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-c7" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-d7" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-e7" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-f7" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-g7" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-h7" class="square-white"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a6" class="square-white"></td>
-				<td id="sq-b6" class="square-black"></td>
-				<td id="sq-c6" class="square-white"></td>
-				<td id="sq-d6" class="square-black"></td>
-				<td id="sq-e6" class="square-white"></td>
-				<td id="sq-f6" class="square-black"></td>
-				<td id="sq-g6" class="square-white"></td>
-				<td id="sq-h6" class="square-black"></td>
+				<td> <canvas id="sq-a6" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-b6" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-c6" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-d6" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-e6" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-f6" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-g6" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-h6" class="square-black"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a5" class="square-black"></td>
-				<td id="sq-b5" class="square-white"></td>
-				<td id="sq-c5" class="square-black"></td>
-				<td id="sq-d5" class="square-white"></td>
-				<td id="sq-e5" class="square-black"></td>
-				<td id="sq-f5" class="square-white"></td>
-				<td id="sq-g5" class="square-black"></td>
-				<td id="sq-h5" class="square-white"></td>
+				<td> <canvas id="sq-a5" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-b5" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-c5" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-d5" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-e5" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-f5" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-g5" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-h5" class="square-white"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a4" class="square-white"></td>
-				<td id="sq-b4" class="square-black"></td>
-				<td id="sq-c4" class="square-white"></td>
-				<td id="sq-d4" class="square-black"></td>
-				<td id="sq-e4" class="square-white"></td>
-				<td id="sq-f4" class="square-black"></td>
-				<td id="sq-g4" class="square-white"></td>
-				<td id="sq-h4" class="square-black"></td>
+				<td> <canvas id="sq-a4" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-b4" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-c4" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-d4" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-e4" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-f4" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-g4" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-h4" class="square-black"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a3" class="square-black"></td>
-				<td id="sq-b3" class="square-white"></td>
-				<td id="sq-c3" class="square-black"></td>
-				<td id="sq-d3" class="square-white"></td>
-				<td id="sq-e3" class="square-black"></td>
-				<td id="sq-f3" class="square-white"></td>
-				<td id="sq-g3" class="square-black"></td>
-				<td id="sq-h3" class="square-white"></td>
+				<td> <canvas id="sq-a3" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-b3" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-c3" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-d3" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-e3" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-f3" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-g3" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-h3" class="square-white"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a2" class="square-white"></td>
-				<td id="sq-b2" class="square-black"></td>
-				<td id="sq-c2" class="square-white"></td>
-				<td id="sq-d2" class="square-black"></td>
-				<td id="sq-e2" class="square-white"></td>
-				<td id="sq-f2" class="square-black"></td>
-				<td id="sq-g2" class="square-white"></td>
-				<td id="sq-h2" class="square-black"></td>
+				<td> <canvas id="sq-a2" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-b2" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-c2" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-d2" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-e2" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-f2" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-g2" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-h2" class="square-black"></canvas> </td>
 			</tr>
 			<tr>
-				<td id="sq-a1" class="square-black"></td>
-				<td id="sq-b1" class="square-white"></td>
-				<td id="sq-c1" class="square-black"></td>
-				<td id="sq-d1" class="square-white"></td>
-				<td id="sq-e1" class="square-black"></td>
-				<td id="sq-f1" class="square-white"></td>
-				<td id="sq-g1" class="square-black"></td>
-				<td id="sq-h1" class="square-white"></td>
+				<td> <canvas id="sq-a1" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-b1" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-c1" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-d1" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-e1" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-f1" class="square-white"></canvas> </td>
+				<td> <canvas id="sq-g1" class="square-black"></canvas> </td>
+				<td> <canvas id="sq-h1" class="square-white"></canvas> </td>
 			</tr>
 		</table>
 	</div>
