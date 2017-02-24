@@ -9,6 +9,7 @@ namespace TrulyQuantumChess.WebApp {
         {
             Get["/"] = Index;
             Get["/play"] = Play;
+            Get["/rules"] = Rules;
         }
 
         private dynamic Index(dynamic args) {
@@ -20,6 +21,10 @@ namespace TrulyQuantumChess.WebApp {
                 GameId = Request.Query["gameId"]
             };
             return View["Play.sshtml", model];
+        }
+
+        private dynamic Rules(dynamic args) {
+            return View["Rules.sshtml"];
         }
     }
 }

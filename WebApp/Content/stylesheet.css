@@ -3,6 +3,10 @@
     padding-bottom: 2rem;
 }
 
+.red {
+    color: red;
+}
+
 .centered {
     text-align: center;
 }
@@ -27,6 +31,10 @@ table.chessboard {
     width: 320px;
 }
 
+table.chessboard.game-over {
+    opacity: 0.3;
+}
+
 table.chessboard td {
     overflow: hidden;
     width: 40px;
@@ -41,14 +49,18 @@ table.chessboard td canvas {
     vertical-align: bottom;
 }
 
-.square-black:not(.square-source) {
+.square-black:not(.square-selected):not(.square-selected-quantum) {
     background-color: #d3d3d3;
 }
 
-.square-white:not(.square-source) {
+.square-white:not(.square-selected):not(.square-selected-quantum) {
     background-color: #ffffe0;
 }
 
-.square-source {
+.square-selected {
     background-color: #99ff99;
+}
+
+.square-selected-quantum {
+    background-color: #e600e6;
 }

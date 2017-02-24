@@ -5,5 +5,10 @@
 @EndSection
 
 @Section['Body']
-	<button id="play_btn" class="btn btn-primary center-of-screen">Play with friend</button>
+	<div class="centered">
+		<img src="/content/logo.png"></img>
+		<br><br>
+		<button id="play_btn" class="btn btn-primary">Play with friend</button>
+		<a href="/rules" class="btn btn-default">Rules of quantum chess</a>
+	</div>
 @EndSection

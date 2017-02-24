@@ -9,9 +9,15 @@
 
 @Section['Body']
 	<div class="chessboard-container" align="center">
-		Game state: <span id="game_state">idle</span>
+		<span id="game_state">Copy the page URL and send it to your friend</span>
 		<br>
-		Active player: <span id="active_player">-</span>
+		<div id="new_game" hidden="true">
+			<a href="/" class="btn btn-default">New game</a>
+			<br> <br>
+		</div>
+		<strong>active player: <span id="active_player">-</span></strong>
+		<br>
+		<span id="error_message" class="red"></span>
 		<br> <br>
 		<table class="chessboard">
 			<tr>
@@ -95,5 +101,9 @@
 				<td> <canvas id="sq-h1" class="square-white"></canvas> </td>
 			</tr>
 		</table>
+		<br>
+		<button id="capitulate_btn" class="btn btn-default">Capitulate</button>
+		<button id="castle_left_btn" class="btn btn-default">Left castle</button>
+		<button id="castle_right_btn" class="btn btn-default">Right castle</button>
 	</div>
 @EndSection

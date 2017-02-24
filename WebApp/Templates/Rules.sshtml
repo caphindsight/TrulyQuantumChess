@@ -1,0 +1,82 @@
+﻿@Master['Master.sshtml']
+
+@Section['Body']
+	<div class="centered">
+		<a href="/" class="btn btn-default">Return to lobby</a>
+	</div>
+	<br>
+	<h1>Rules of Quantum Chess</h1>
+	<h2>Moves in quantum chess</h2>
+	<h3>Ordinary moves</h3>
+	<p> <strong>TL;DR:</strong> all pieces mimic the pieces from ordinary chess.
+	<p> The <em>quantum king</em> moves exactly one square horizontally, vertially or diagonally. In quantum chess, you can castle any number of times, and you can castle even if your king is in check. You will find more about castling in this document below.
+	<p> The <em>quantum rook</em> moves any number of vacant squares horizontally or vertically. Rooks are involved in castling.
+	<p> The <em>quantum bishop</em> moves any number of vacant squares diagonally.
+	<p> The <em>quantum queen</em> can move horizontally, vertically, or diagonally.
+	<p> The <em>quantum knight</em> can move in the same "L" pattern as the knight from ordinary chess.
+	<p> The <em>quantum pawn</em> moves one square forward, or it can move two squares forward in case it is its first move in the game. Pawn moves are different in case of captures: a pawn can capture only pieces which are on the two diagonal squares in front of the pawn. Pawns are promoted to queens when they reach the final row of the board.
+
+	<h3>Quantum moves</h3>
+	<p> Each piece in quantum chess can make a quantum move, which consists of one or two consequent moves in a row. None of the constituent moves can be a capture. Unlike in other implementations, pawns <em>can</em> quantum-move!
+	<p> But this comes with a price: each time a quantum move is made, the board enters the <em>quantum superposition</em> of the two boards: one where the quantum move succeeded, and one where it failed completely.
+	<p> This is actually a pretty simple concept. The quantum chessboard can be understood as a superposition of an arbitrary number of classical chessboards. Each time a quantum move is made, this superposition grows in size.
+	<p> The game is played on the quantum chessboard, or, equivalently, on <em>all classical chessboards simultaneously</em>.
+
+	<h3>Check & checkmate</h3>
+	<p> There is no concept of check or checkmate in the game, because it is hard to introduce for a superposition of boards, where the king might be in check on a fraction of classical chessboards.
+	<p> The game of quantum chess is won when the opponent's king is captured on all chessboards of the superposition.
+
+	<h3>Castling</h3>
+	<p> You can castle any number of times during the game, provided that your king and rook are in right places and there's no pieces in between.
+
+	<h2>Making moves</h2>
+	<h3>Playing with friends</h3>
+	<p> Click on "Play with friend" on the index page, then send the page's URL to your friend. She should be able to play with you on the same quantum chessboard.
+
+	<h3>Making ordinary moves</h3>
+	<p> Click on the square with your piece on it and it will become green. Click on any other square and the move will be made.
+
+	<h3>Making quantum moves</h3>
+	<p> Click on the selected piece once again. The square will become purple, which means that you are about to make a quantum move.
+	<p> Select the middle position of the move (it will become green). Now you can click on any square in order to initiate the quantum move from source position to the middle position and finally to the target position.
+	<p> In case you want to make a single move quantum, click again on the middle position (the green square).
+
+	<h3>Canceling</h3>
+	<p> If you changed your mind, click once again (the third time) on your selected piece. The selection will disappear. You can click on the selected piece to cancel incomplete quantum moves, too.
+
+	<h2>Quantum magic</h2>
+	<h3>Pieces can be in different places simultaneously</h3>
+	<p> Well, pieces can be in different places simultaneously.
+	<p> In the user interface you will see this as two pieces, each having some probability to exist. Each piece has a special meter showing how probable it is that it exists on the specified square.
+	<p> You can make moves with this kinds of pieces. These moves will only affect the chessboards in the superposition with the piece in place.
+
+	<h3>Pieces can be dead and alive at the same time</h3>
+	<p> Like Schrodinger's cat, quantum pieces can be in a superposition of being alive and captured. You may even play on a quantum board where your king is simultaneously dead and alive!
+	<p> This can be achieved by capturing a piece, which exists in two places simultaneously, on one of these places.
+
+	<h3>Quantum entanglement</h3>
+	<p> A piece can move through another piece on chessboards where the other piece doesn't exist.
+	<p> The act of passing through makes the two pieces quantum-mechanically <em>entangled</em>. This means that the position of one piece <em>is correlated</em> with the position of another piece!
+
+	<h2>Measurements</h2>
+	<h3>Capturing superposed pieces</h3>
+	<p> As you already know, you can capture superposed pieces. This renders the piece in a state of being dead and alive at the same time.
+
+	<h3>Capturing with superposed pieces</h3>
+	<p> Another situation arises when you capture <em>with</em> superposed pieces. Generally, this would leave the position of capture in a superposition of opponent's original piece and your piece which makes the capture.
+	<p> These kinds of superpositions aren't allowed by the rules of the game. In this situations a measurement occurs, which throws away some chessboards. The measurement decides whether the capture succeeded or failed.
+	<p> When a measurement is made, the probabilities of pieces are respected. For example, you have a 50% chance of capturing with a piece with 50% presence.
+
+	<h3>When do measurements occur?</h3>
+	<p> The general rule is: whenever a square is in a superposition of different occupant pieces, the measurement occurs which decides which of the pieces occupies the mentioned square.
+
+	<h2>About quantum chess</h2>
+	<h3>What is its purpose?</h3>
+	<p> To popularize one of the most exciting aspects of the real world; to enable everybody to play around with the rules of quantum physics; to have fun.
+
+	<h3>Who stands behind it?</h3>
+	<p> I am unsure who stands behind the idea of quantum chess, but this implementation was made by a small group of enthusiasts. You can reach us at <a href="mailto:solenodonus@gmail.com">solenodonus@gmail.com</a>. Also, check out my <a href="http://solenodonus.com">blog on theoretical phycs</a>.
+
+	<h3>Feedback and bug reports</h3>
+	<p> Can be sent to <a href="mailto:solenodonus@gmail.com">solenodonus@gmail.com</a>. However, keep in mind that this game is in early alpha. There's a good chance that we already know about the bug, but haven't had time to fix it yet.
+@EndSection
