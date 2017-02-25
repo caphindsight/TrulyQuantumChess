@@ -2,5 +2,16 @@
     "ListenUrl" : "http://localhost:9000",
     "Prefix": "/truly-quantum-chess",
     "CleanAfterHours": 0.5,
-    "Mode": "debug"
+    "Debug": true,
+    "Pieces": {
+        "Collection": "simple",
+        "WidthRatios": {
+            "Pawn": 0.59,
+            "Knight": 0.78,
+            "Bishop": 0.82,
+            "Rook": 0.69,
+            "Queen": 0.93,
+            "King": 0.83
+        }
+    }
 }

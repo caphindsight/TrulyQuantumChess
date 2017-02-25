@@ -19,6 +19,21 @@ namespace TrulyQuantumChess.WebApp {
         public string ListenUrl { get; private set; }
         public string Prefix { get; private set; }
         public double CleanAfterHours { get; private set; }
-        public string Mode { get; private set; }
+        public bool Debug { get; private set; }
+        public PiecesInfo Pieces { get; private set; }
+    }
+
+    public class PiecesInfo {
+        public string Collection { get; private set; }
+        public PiecesWidthRatiosInfo WidthRatios { get; private set; }
+    }
+
+    public class PiecesWidthRatiosInfo {
+        public double Pawn { get; private set; }
+        public double Knight { get; private set; }
+        public double Bishop { get; private set; }
+        public double Rook { get; private set; }
+        public double Queen { get; private set; }
+        public double King { get; private set; }
     }
 }

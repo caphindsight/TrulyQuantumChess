@@ -1,10 +1,19 @@
 ﻿@Master['Master.sshtml']
 
 @Section['Head']
-	<script src="@Model.Prefix/content/play.js"></script>
 	<script>
 		var gameId = "@Model.GameId";
+		var pieces_collection = "@Model.PiecesCollection";
+		var pieces_width_ratios = {
+			pawn: @Model.PawnWidthRatio,
+			knight: @Model.KnightWidthRatio,
+			bishop: @Model.BishopWidthRatio,
+			rook: @Model.RookWidthRatio,
+			queen: @Model.QueenWidthRatio,
+			king: @Model.KingWidthRatio
+		};
 	</script>
+	<script src="@Model.Prefix/content/play.js"></script>
 @EndSection
 
 @Section['Body']

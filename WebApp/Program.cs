@@ -22,7 +22,8 @@ namespace TrulyQuantumChess.WebApp {
                 } catch (ThreadAbortException) {}
             });
 
-            StaticConfiguration.DisableErrorTraces = WebAppConfig.Instance.Mode != "debug";
+            StaticConfiguration.DisableErrorTraces = !WebAppConfig.Instance.Debug;
+
             var uri = new Uri(WebAppConfig.Instance.ListenUrl);
             using (var host = new NancyHost(uri)) {
                 host.Start();
