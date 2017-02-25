@@ -39,6 +39,10 @@ namespace TrulyQuantumChess.WebApp {
         public override string ToString() {
             return $"[GameId({Value})]";
         }
+
+        public GameId Clone() {
+            return new GameId(Value);
+        }
     }
 
     public class GameNotFoundException : QuantumChessException {
@@ -118,7 +122,11 @@ namespace TrulyQuantumChess.WebApp {
 
         public static void Clean() {
             lock (Games_) {
-                foreach (GameId key in Games_.Keys) {
+                var keys = new List<GameId>();
+                foreach (var key in Games_.Keys)
+                    keys.Add(key.Clone());
+
+                foreach (GameId key in keys) {
                     Game game = Games_[key];
                     TimeSpan ts = DateTime.Now - game.LastAccess;
                     if (ts.TotalHours > WebAppConfig.Instance.CleanAfterHours)
