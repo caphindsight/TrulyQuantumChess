@@ -15,7 +15,7 @@
 		@Each.GameIds
 			<tr>
 				<td>
-					<a href="@Model.Prefix/play?gameId=@Current.GameId">@Current.GameId</a>
+					<a target="_blank" href="@Model.Prefix/play?gameId=@Current.GameId">@Current.GameId</a>
 				</td>
 				<td>
 					@Current.LastModificationString
