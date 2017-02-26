@@ -11,7 +11,7 @@ namespace TrulyQuantumChess.WebApp {
                 try {
                     for (;;) {
                         try {
-                            WebAppManagers.DatabaseManager.CleanOldEntities(DateTime.UtcNow - TimeSpan.FromHours(WebAppConfig.Instance.CleanAfterHours)).Wait();
+                            WebAppManagers.DatabaseManager.CleanOldEntities(DateTime.Now - TimeSpan.FromHours(WebAppConfig.Instance.CleanAfterHours)).Wait();
                         } catch (ThreadAbortException) {
                             throw;
                         } catch (Exception e) {

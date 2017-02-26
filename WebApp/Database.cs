@@ -29,15 +29,33 @@ namespace TrulyQuantumChess.WebApp {
 
     public struct GameInfo {
         public string GameId;
+
         public TimeSpan LastModification;
         public string LastModificationString {
-            get {
-                if (LastModification > TimeSpan.FromSeconds(90))
-                    return $"{Convert.ToInt32(LastModification.TotalMinutes)} mins";
-                else
-                    return $"{Convert.ToInt32(LastModification.TotalSeconds)} secs";
-            }
+            get { return TimeSpanString(LastModification); }
         }
+
+        public TimeSpan CreationTime;
+        public string CreationTimeString {
+            get { return TimeSpanString(CreationTime); }
+        }
+
+        public GameState GameState;
+        public string GameStateString {
+            get { return GameStateUtils.ToString(GameState); }
+        }
+
+        private static string TimeSpanString(TimeSpan time_span) {
+            if (time_span <= TimeSpan.FromSeconds(90))
+                return $"{Convert.ToInt32(time_span.TotalSeconds)} secs";
+            else if (time_span <= TimeSpan.FromMinutes(90))
+                return $"{Convert.ToInt32(time_span.TotalMinutes)} mins";
+            else if (time_span <= TimeSpan.FromHours(90))
+                return $"{Convert.ToInt32(time_span.TotalHours)} hours";
+            else
+                return $"{Convert.ToInt32(time_span.TotalDays)} days";
+        }
+
     }
 
     public interface IDatabaseManager {
@@ -82,7 +100,9 @@ namespace TrulyQuantumChess.WebApp {
                     foreach (var document in batch) {
                         res.Add(new GameInfo() {
                             GameId = document["_id"].AsObjectId.ToString(),
-                            LastModification = DateTime.UtcNow - document["last_modification_time"].ToUniversalTime(),
+                            LastModification = DateTime.Now - document["last_modification_time"].ToLocalTime(),
+                            CreationTime = DateTime.Now - document["creation_time"].ToLocalTime(),
+                            GameState = GameStateUtils.FromString(document["game_state"].AsString),
                         });
                     }
                 }
@@ -119,7 +139,7 @@ namespace TrulyQuantumChess.WebApp {
                 while (await cursor.MoveNextAsync()) {
                     var batch = cursor.Current;
                     foreach (var document in batch) {
-                        DateTime last_access_time = document["last_modification_time"].ToUniversalTime();
+                        DateTime last_access_time = document["last_modification_time"].ToLocalTime();
                         if (last_access_time < modification_instant) {
                             Console.WriteLine($"{last_access_time} < {modification_instant}");
                             await ActiveGames_.DeleteOneAsync(FilterById(document["_id"].AsObjectId));
@@ -136,6 +156,7 @@ namespace TrulyQuantumChess.WebApp {
             document.Set("_id", new BsonObjectId(game.Id));
             document.Set("active_player", PlayerUtils.ToString(game.Engine.ActivePlayer));
             document.Set("game_state", GameStateUtils.ToString(game.Engine.QuantumChessboard.GameState));
+            document.Set("creation_time", game.Engine.CreationTime);
             document.Set("last_modification_time", DateTime.Now);
 
             var bson_harmonics = new BsonArray();
@@ -170,6 +191,7 @@ namespace TrulyQuantumChess.WebApp {
             ObjectId id = document["_id"].AsObjectId;
             Player active_player = PlayerUtils.FromString(document["active_player"].AsString);
             GameState game_state = GameStateUtils.FromString(document["game_state"].AsString);
+            DateTime creation_time = document["creation_time"].ToLocalTime();
 
             var harmonics = new List<QuantumHarmonic>();
             foreach (BsonValue bson_harmonic_val in document["harmonics"].AsBsonArray) {
@@ -193,7 +215,7 @@ namespace TrulyQuantumChess.WebApp {
             }
 
             var quantum_chessboard = new QuantumChessboard(harmonics, game_state);
-            var engine = new QuantumChessEngine(quantum_chessboard, active_player);
+            var engine = new QuantumChessEngine(quantum_chessboard, active_player, creation_time);
             return new Game(id, engine);
         }
     }

@@ -10,15 +10,18 @@ namespace TrulyQuantumChess.Kernel.Engine {
         public QuantumChessEngine() {
             QuantumChessboard_ = QuantumChessboard.StartingQuantumChessboard();
             ActivePlayer_ = Player.White;
+            CreationTime_ = DateTime.Now;
         }
 
-        public QuantumChessEngine(QuantumChessboard quantum_chessboard, Player active_player) {
+        public QuantumChessEngine(QuantumChessboard quantum_chessboard, Player active_player, DateTime creation_time) {
             QuantumChessboard_ = quantum_chessboard;
             ActivePlayer_ = active_player;
+            CreationTime_ = creation_time;
         }
 
         private readonly QuantumChessboard QuantumChessboard_;
         private Player ActivePlayer_;
+        private DateTime CreationTime_;
 
         public QuantumChessboard QuantumChessboard {
             get { return QuantumChessboard_; }
@@ -26,6 +29,10 @@ namespace TrulyQuantumChess.Kernel.Engine {
 
         public Player ActivePlayer {
             get { return ActivePlayer_; }
+        }
+
+        public DateTime CreationTime {
+            get { return CreationTime_; }
         }
 
         public GameState GameState {
