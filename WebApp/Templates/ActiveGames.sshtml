@@ -1,0 +1,17 @@
+﻿@Master['Master.sshtml']
+
+@Section['Body']
+	<h1>Active games:</h1>
+	<table class="table">
+	@Each.GameIds
+		<tr>
+			<td>
+				<a href="@Model.Prefix/play?gameId=@Current.GameId">@Current.GameId</a>
+			</td>
+			<td>
+				@Current.LastModificationString
+			</td>
+		</tr>
+	@EndEach
+	</table>
+@EndSection

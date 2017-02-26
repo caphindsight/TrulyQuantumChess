@@ -27,7 +27,21 @@ namespace TrulyQuantumChess.WebApp {
         }
     }
 
+    public struct GameInfo {
+        public string GameId;
+        public TimeSpan LastModification;
+        public string LastModificationString {
+            get {
+                if (LastModification > TimeSpan.FromSeconds(90))
+                    return $"{Convert.ToInt32(LastModification.TotalMinutes)} mins";
+                else
+                    return $"{Convert.ToInt32(LastModification.TotalSeconds)} secs";
+            }
+        }
+    }
+
     public interface IDatabaseManager {
+        Task<List<GameInfo>> RequestActiveGames();
         Task<QuantumChessEngine> RequestEngine(string gameId);
         Task<string> InsertEngine(QuantumChessEngine engine);
         Task UpdateEngine(string gameId, QuantumChessEngine engine);
@@ -58,6 +72,23 @@ namespace TrulyQuantumChess.WebApp {
 
         private static BsonDocument FilterById(string id) {
             return FilterById(new ObjectId(id));
+        }
+
+        public async Task<List<GameInfo>> RequestActiveGames() {
+            var res = new List<GameInfo>();
+            using (var cursor = await ActiveGames_.FindAsync(EmptyFilter_)) {
+                while (await cursor.MoveNextAsync()) {
+                    var batch = cursor.Current;
+                    foreach (var document in batch) {
+                        res.Add(new GameInfo() {
+                            GameId = document["_id"].AsObjectId.ToString(),
+                            LastModification = DateTime.UtcNow - document["last_modification_time"].ToUniversalTime(),
+                        });
+                    }
+                }
+            }
+            res.Sort((x, y) => x.LastModification.CompareTo(y.LastModification));
+            return res;
         }
 
         public async Task<QuantumChessEngine> RequestEngine(string gameId) {
