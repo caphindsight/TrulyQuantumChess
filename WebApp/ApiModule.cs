@@ -20,6 +20,9 @@ namespace TrulyQuantumChess.WebApp {
             Get["/new_game"] = (args) => NewGame(args, new CancellationToken()).Result;
             Get["/game_info"] = (args) => GameInfo(args, new CancellationToken()).Result;
             Post["/submit_move"] = (args) => SubmitMove(args, new CancellationToken()).Result;
+
+            // This doesn't work yet, because we would have to obtain exclusive locks for each chessboard
+            // Although, we probably have to obtain them anyway... Future will tell.
             // Get["/new_game", true] = NewGame;
             // Get["/game_info", true] = GameInfo;
             // Post["/submit_move", true] = SubmitMove;
