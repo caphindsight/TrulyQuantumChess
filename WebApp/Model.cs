@@ -18,7 +18,7 @@ namespace TrulyQuantumChess.WebApp.Model {
             if (MoveType == "ordinary") {
                 Position source = Position.Parse(Source);
                 Position target = Position.Parse(Target);
-                Piece? piece = engine.Chessboard.GetQuantumPiece(source).Piece;
+                Piece? piece = engine.QuantumChessboard.GetQuantumPiece(source).Piece;
                 if (piece.HasValue)
                     return new OrdinaryMove(piece.Value, source, target);
                 else
@@ -29,7 +29,7 @@ namespace TrulyQuantumChess.WebApp.Model {
                 if (!String.IsNullOrEmpty(Middle))
                     middle = Position.Parse(Middle);
                 Position target = Position.Parse(Target);
-                Piece? piece = engine.Chessboard.GetQuantumPiece(source).Piece;
+                Piece? piece = engine.QuantumChessboard.GetQuantumPiece(source).Piece;
                 if (piece.HasValue)
                     return new QuantumMove(piece.Value, source, middle, target);
                 else

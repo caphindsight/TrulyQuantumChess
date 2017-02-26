@@ -1,7 +1,11 @@
 ﻿{
     "ListenUrl" : "http://localhost:9000",
     "Prefix": "/truly-quantum-chess",
-    "CleanAfterHours": 0.5,
+    "Mongo": {
+        "ConnectionString": "mongodb://localhost:32768",
+        "Database": "truly_quantum_chess"
+    },
+    "CleanAfterHours": 2,
     "Debug": true,
     "Pieces": {
         "Collection": "simple",

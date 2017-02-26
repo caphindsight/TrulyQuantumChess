@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Nancy;
 
@@ -9,6 +11,7 @@ namespace TrulyQuantumChess.WebApp {
         {
             Get["/"] = Index;
             Get["/play"] = Play;
+            Get["/active-games", true] = ActiveGames;
         }
 
         private dynamic Index(dynamic args) {
@@ -28,6 +31,14 @@ namespace TrulyQuantumChess.WebApp {
                 KingWidthRatio = WebAppConfig.Instance.Pieces.WidthRatios.King,
             };
             return View["Play.sshtml", model];
+        }
+
+        private async Task<dynamic> ActiveGames(dynamic args, CancellationToken cancellation_token) {
+            var model = new {
+                WebAppConfig.Instance.Prefix,
+                GameIds = await WebAppManagers.DatabaseManager.RequestActiveGames()
+            };
+            return View["ActiveGames.sshtml", model];
         }
     }
 }

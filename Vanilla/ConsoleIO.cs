@@ -39,7 +39,7 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
             } else if (ordinary_match.Success) {
                 Position source = Position.Parse(ordinary_match.Groups[1].Captures[0].Value);
                 Position target = Position.Parse(ordinary_match.Groups[2].Captures[0].Value);
-                QuantumPiece qpiece = engine.Chessboard.GetQuantumPiece(source);
+                QuantumPiece qpiece = engine.QuantumChessboard.GetQuantumPiece(source);
                 if (qpiece.Piece.HasValue)
                     return new OrdinaryMove(qpiece.Piece.Value, source, target);
                 else
@@ -50,7 +50,7 @@ namespace TrulyQuantumChess.Vanilla.ConsoleIO {
                 if (quantum_match.Groups[2].Captures[0].Length > 0)
                     middle = Position.Parse(quantum_match.Groups[2].Captures[0].Value);
                 Position target = Position.Parse(quantum_match.Groups[3].Captures[0].Value);
-                QuantumPiece qpiece = engine.Chessboard.GetQuantumPiece(source);
+                QuantumPiece qpiece = engine.QuantumChessboard.GetQuantumPiece(source);
                 if (qpiece.Piece.HasValue)
                     return new QuantumMove(qpiece.Piece.Value, source, middle, target);
                 else

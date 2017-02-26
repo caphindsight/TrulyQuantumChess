@@ -8,23 +8,35 @@ using TrulyQuantumChess.Kernel.Quantize;
 namespace TrulyQuantumChess.Kernel.Engine {
     public class QuantumChessEngine {
         public QuantumChessEngine() {
-            Chessboard_ = QuantumChessboard.StartingQuantumChessboard();
+            QuantumChessboard_ = QuantumChessboard.StartingQuantumChessboard();
             ActivePlayer_ = Player.White;
+            CreationTime_ = DateTime.Now;
         }
 
-        private readonly QuantumChessboard Chessboard_;
-        private Player ActivePlayer_;
+        public QuantumChessEngine(QuantumChessboard quantum_chessboard, Player active_player, DateTime creation_time) {
+            QuantumChessboard_ = quantum_chessboard;
+            ActivePlayer_ = active_player;
+            CreationTime_ = creation_time;
+        }
 
-        public QuantumChessboard Chessboard {
-            get { return Chessboard_; }
+        private readonly QuantumChessboard QuantumChessboard_;
+        private Player ActivePlayer_;
+        private DateTime CreationTime_;
+
+        public QuantumChessboard QuantumChessboard {
+            get { return QuantumChessboard_; }
         }
 
         public Player ActivePlayer {
             get { return ActivePlayer_; }
         }
 
+        public DateTime CreationTime {
+            get { return CreationTime_; }
+        }
+
         public GameState GameState {
-            get { return Chessboard_.GameState; }
+            get { return QuantumChessboard_.GameState; }
         }
 
         public void Submit(QuantumChessMove move) {
@@ -32,29 +44,29 @@ namespace TrulyQuantumChess.Kernel.Engine {
                 MoveProcessException.Throw("Waiting for another player's move");
 
             if (move is CapitulateMove) {
-                Chessboard_.RegisterVictory(PlayerUtils.InvertPlayer(ActivePlayer_));
+                QuantumChessboard_.RegisterVictory(PlayerUtils.InvertPlayer(ActivePlayer_));
             } else if (move is AgreeToTieMove) {
-                Chessboard_.RegisterTie();
+                QuantumChessboard_.RegisterTie();
             } else if (move is OrdinaryMove) {
                 var omove = move as OrdinaryMove;
-                if (Chessboard_.CheckOrdinaryMoveApplicable(omove)) {
-                    Chessboard_.ApplyOrdinaryMove(omove);
+                if (QuantumChessboard_.CheckOrdinaryMoveApplicable(omove)) {
+                    QuantumChessboard_.ApplyOrdinaryMove(omove);
                     ActivePlayer_ = PlayerUtils.InvertPlayer(ActivePlayer_);
                 } else {
                     MoveProcessException.Throw("Move is inapplicable on all harmonics");
                 }
             } else if (move is QuantumMove) {
                 var qmove = move as QuantumMove;
-                if (Chessboard_.CheckQuantumMoveApplicable(qmove)) {
-                    Chessboard_.ApplyQuantumMove(qmove);
+                if (QuantumChessboard_.CheckQuantumMoveApplicable(qmove)) {
+                    QuantumChessboard_.ApplyQuantumMove(qmove);
                     ActivePlayer_ = PlayerUtils.InvertPlayer(ActivePlayer_);
                 } else {
                     MoveProcessException.Throw("Quantum move is inapplicable on all harmonics");
                 }
             } else if (move is CastleMove) {
                 var cmove = move as CastleMove;
-                if (Chessboard_.CheckCastleMoveApplicable(cmove)) {
-                    Chessboard_.ApplyCastleMove(cmove);
+                if (QuantumChessboard_.CheckCastleMoveApplicable(cmove)) {
+                    QuantumChessboard_.ApplyCastleMove(cmove);
                     ActivePlayer_ = PlayerUtils.InvertPlayer(ActivePlayer_);
                 } else {
                     MoveProcessException.Throw("Castle is inapplicable on all harmonics");

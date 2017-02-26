@@ -53,6 +53,14 @@ namespace TrulyQuantumChess.Kernel.Quantize {
         private List<QuantumHarmonic> Harmonics_ = new List<QuantumHarmonic>();
         private GameState GameState_ = GameState.Tie;
 
+        public QuantumChessboard() {
+        }
+
+        public QuantumChessboard(List<QuantumHarmonic> harmonics, GameState gameState) {
+            Harmonics_ = harmonics;
+            GameState_ = gameState;
+        }
+
         public static QuantumChessboard StartingQuantumChessboard() {
             var res = new QuantumChessboard();
             res.GameState_ = GameState.GameStillGoing;
@@ -164,6 +172,23 @@ namespace TrulyQuantumChess.Kernel.Quantize {
             }
         }
 
+        private void PerformSpontaneousMeasurement() {
+            ulong total_degeneracy = 0;
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
+                total_degeneracy += harmonic.Degeneracy;
+            }
+
+            foreach (QuantumHarmonic harmonic in Harmonics_) {
+                if (MeasurementUtils.Decide(harmonic.Degeneracy, total_degeneracy)) {
+                    var new_harmonics = new List<QuantumHarmonic>();
+                    new_harmonics.Add(harmonic);
+                    Harmonics_ = new_harmonics;
+                    return;
+                }
+                total_degeneracy -= harmonic.Degeneracy;
+            }
+        }
+
         private void UpdateGameState() {
             if (GameState_ != GameState.GameStillGoing)
                 return;
@@ -200,6 +225,8 @@ namespace TrulyQuantumChess.Kernel.Quantize {
 
         private void UpdateQuantumCheckboard() {
             PerformMeasurements();
+            if (Harmonics_.Count >= 1024)
+                PerformSpontaneousMeasurement();
             RegroupHarmonics();
             RenormalizeDegeneracies();
             UpdateGameState();
