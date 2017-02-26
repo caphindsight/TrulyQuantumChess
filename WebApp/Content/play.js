@@ -16,6 +16,24 @@ function reset_move() {
 
 var prev_chessboard = null;
 
+function squares_equal(a, b) {
+    if (a == null && b == null) {
+        return true;
+    } else if (a != null && b == null) {
+        return false;
+    } else if (a == null && b != null) {
+        return false;
+    } else {
+        if (a.player != b.player)
+            return false;
+        if (a.piece != b.piece)
+            return false;
+        if (a.probability != b.probability)
+            return false;
+        return true;
+    }
+}
+
 function chessboards_equal(a, b) {
     if (a == null && b == null) {
         return true;
@@ -33,20 +51,8 @@ function chessboards_equal(a, b) {
             var x = rows[x_i];
             for (var y = 1; y <= 8; y++) {
                 var pos = x + y;
-                if (a.squares[pos] == null && b.squares[pos] == null) {
-                    continue;
-                } else if (a.squares[pos] == null && b.squares[pos] != null) {
+                if (!squares_equal(a.squares[pos], b.squares[pos]))
                     return false;
-                } else if (a.squares[pos] != null && b.squares[pos] == null) {
-                    return false;
-                } else {
-                    if (a.squares[pos].player != b.squares[pos].player)
-                        return false;
-                    if (a.squares[pos].piece != b.squares[pos].piece)
-                        return false;
-                    if (a.squares[pos].probability != b.squares[pos].probability)
-                        return false;
-                }
             }
         }
         return true;
@@ -106,7 +112,6 @@ function update_chessboard() {
     var board = $.get(prefix + "/api/game_info", {"gameId": gameId}, function(data) {
         if (chessboards_equal(prev_chessboard, data))
             return;
-        prev_chessboard = data;
         if (data.gameState != "game_still_going") {
             $(".chessboard").addClass("game-over");
             var message = "???";
@@ -123,8 +128,11 @@ function update_chessboard() {
             $("#new_game").show();
         }
         $("#active_player").text(data.activePlayer);
-        for (var pos in data.squares)
-            draw($("#sq-" + pos)[0], data.squares[pos]);
+        for (var pos in data.squares) {
+            if (!squares_equal(prev_chessboard.squares[pos], data.squares[pos]))
+                draw($("#sq-" + pos)[0], data.squares[pos]);
+        }
+        prev_chessboard = data;
     });
 }
 
