@@ -181,8 +181,12 @@ namespace TrulyQuantumChess.WebApp {
                 bson_harmonic.Set("chessboard", bson_chessboard);
                 bson_harmonics.Add(bson_harmonic);
             }
-
             document.Set("harmonics", bson_harmonics);
+
+            var last_move_positions = new BsonArray();
+            foreach (Position pos in game.Engine.LastMovePositions)
+                last_move_positions.Add(pos.ToString());
+            document.Set("last_move_positions", last_move_positions);
 
             return document;
         }
@@ -213,9 +217,13 @@ namespace TrulyQuantumChess.WebApp {
                 }
                 harmonics.Add(new QuantumHarmonic(chessboard, degeneracy));
             }
-
             var quantum_chessboard = new QuantumChessboard(harmonics, game_state);
-            var engine = new QuantumChessEngine(quantum_chessboard, active_player, creation_time);
+
+            var last_move_positions = new List<Position>();
+            foreach (BsonValue pos_val in document["last_move_positions"].AsBsonArray)
+                last_move_positions.Add(Position.Parse(pos_val.AsString));
+
+            var engine = new QuantumChessEngine(quantum_chessboard, active_player, creation_time, last_move_positions.ToArray());
             return new Game(id, engine);
         }
     }

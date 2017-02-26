@@ -60,11 +60,15 @@ table.chessboard td canvas {
     vertical-align: bottom;
 }
 
-.square-black:not(.square-selected):not(.square-selected-quantum) {
+.square-last-move:not(.square-selected):not(.square-selected-quantum) {
+    background-color: #99ccff;
+}
+
+.square-black:not(.square-selected):not(.square-selected-quantum):not(.square-last-move) {
     background-color: #d3d3d3;
 }
 
-.square-white:not(.square-selected):not(.square-selected-quantum) {
+.square-white:not(.square-selected):not(.square-selected-quantum):not(.square-last-move) {
     background-color: #ffffe0;
 }
 

@@ -60,5 +60,6 @@ namespace TrulyQuantumChess.WebApp.Model {
         public string GameState;
         public string ActivePlayer;
         public Dictionary<String, SquareEncoded> Squares;
+        public string[] LastMovePositions;
     }
 }

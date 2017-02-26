@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -58,6 +59,8 @@ namespace TrulyQuantumChess.WebApp {
                     response.Squares[pos.ToString()] = null;
                 }
             }
+
+            response.LastMovePositions = engine.LastMovePositions.Select((pos) => pos.ToString().ToLower()).ToArray();
 
             return Response.AsJson(response);
         }

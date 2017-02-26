@@ -34,31 +34,6 @@ function squares_equal(a, b) {
     }
 }
 
-function chessboards_equal(a, b) {
-    if (a == null && b == null) {
-        return true;
-    } else if (a == null && b != null) {
-        return false;
-    } else if (a != null && b == null) {
-        return false;
-    } else {
-        if (a.gameState != b.gameState)
-            return false;
-        if (a.activePlayer != b.activePlayer)
-            return false;
-        var rows = "abcdefgh";
-        for (var x_i in rows) {
-            var x = rows[x_i];
-            for (var y = 1; y <= 8; y++) {
-                var pos = x + y;
-                if (!squares_equal(a.squares[pos], b.squares[pos]))
-                    return false;
-            }
-        }
-        return true;
-    }
-}
-
 function submit_move() {
     if (move.middle == move.source || move.middle == move.target)
         move.middle = "";
@@ -110,8 +85,6 @@ function draw(canvas, data) {
 
 function update_chessboard() {
     var board = $.get(prefix + "/api/game_info", {"gameId": gameId}, function(data) {
-        if (chessboards_equal(prev_chessboard, data))
-            return;
         if (data.gameState != "game_still_going") {
             $(".chessboard").addClass("game-over");
             var message = "???";
@@ -129,6 +102,18 @@ function update_chessboard() {
         }
         $("#active_player").text(data.activePlayer);
         for (var pos in data.squares) {
+            var pos_in_last_move = false;
+            for (var i in data.lastMovePositions) {
+                if (data.lastMovePositions[i] == pos) {
+                    pos_in_last_move = true;
+                    break;
+                }
+            }
+            if (pos_in_last_move) {
+                $("#sq-" + pos).addClass("square-last-move");
+            } else {
+                $("#sq-" + pos).removeClass("square-last-move");
+            }
             if (prev_chessboard == null || !squares_equal(prev_chessboard.squares[pos], data.squares[pos]))
                 draw($("#sq-" + pos)[0], data.squares[pos]);
         }
