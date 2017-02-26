@@ -141,7 +141,6 @@ namespace TrulyQuantumChess.WebApp {
                     foreach (var document in batch) {
                         DateTime last_access_time = document["last_modification_time"].ToLocalTime();
                         if (last_access_time < modification_instant) {
-                            Console.WriteLine($"{last_access_time} < {modification_instant}");
                             await ActiveGames_.DeleteOneAsync(FilterById(document["_id"].AsObjectId));
                         }
                     }
