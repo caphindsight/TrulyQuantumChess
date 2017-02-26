@@ -15,7 +15,7 @@ namespace TrulyQuantumChess.WebApp {
         }
 
         private dynamic Index(dynamic args) {
-            return View["Index.sshtml", new { WebAppConfig.Instance.Prefix }];
+            return View["Index.sshtml", new { WebAppConfig.Instance.Prefix, WebAppConfig.Instance.DocUrl }];
         }
 
         private dynamic Play(dynamic args) {

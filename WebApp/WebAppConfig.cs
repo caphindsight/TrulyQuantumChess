@@ -22,6 +22,7 @@ namespace TrulyQuantumChess.WebApp {
         public double CleanAfterHours { get; private set; }
         public bool Debug { get; private set; }
         public PiecesInfo Pieces { get; private set; }
+        public string DocUrl { get; private set; }
     }
 
     // Helper for dependency injections

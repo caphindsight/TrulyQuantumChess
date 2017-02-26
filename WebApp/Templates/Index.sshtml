@@ -9,6 +9,6 @@
 		<img src="@Model.Prefix/content/logo.png"></img>
 		<br><br>
 		<button id="play_btn" class="btn btn-primary">Play with friend</button>
-		<a target="_blank" href="https://github.com/caphindsight/TrulyQuantumChess/wiki" class="btn btn-default">Rules of quantum chess</a>
+		<a target="_blank" href="@Model.DocUrl" class="btn btn-default">Rules of quantum chess</a>
 	</div>
 @EndSection
