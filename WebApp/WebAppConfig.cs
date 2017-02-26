@@ -18,9 +18,25 @@ namespace TrulyQuantumChess.WebApp {
 
         public string ListenUrl { get; private set; }
         public string Prefix { get; private set; }
+        public MongoConnection Mongo { get; private set; }
         public double CleanAfterHours { get; private set; }
         public bool Debug { get; private set; }
         public PiecesInfo Pieces { get; private set; }
+    }
+
+    // Helper for dependency injections
+    public static class WebAppManagers {
+        private static readonly IDatabaseManager DatabaseManager_ =
+            new MongoManager();
+
+        public static IDatabaseManager DatabaseManager {
+            get { return DatabaseManager_; }
+        }
+    }
+
+    public class MongoConnection {
+        public string ConnectionString { get; private set; }
+        public string Database { get; private set; }
     }
 
     public class PiecesInfo {

@@ -11,7 +11,7 @@ namespace TrulyQuantumChess.WebApp {
                 try {
                     for (;;) {
                         try {
-                            Games.Clean();
+                            // Games.Clean();
                         } catch (ThreadAbortException) {
                             throw;
                         } catch (Exception e) {
