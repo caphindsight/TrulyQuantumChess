@@ -19,7 +19,7 @@ namespace TrulyQuantumChess.WebApp {
         {
             Get["/new_game"] = (args) => NewGame(args, new CancellationToken()).Result;
             Get["/game_info"] = (args) => GameInfo(args, new CancellationToken()).Result;
-            Get["/submit_move"] = (args) => SubmitMove(args, new CancellationToken()).Result;
+            Post["/submit_move"] = (args) => SubmitMove(args, new CancellationToken()).Result;
             // Get["/new_game", true] = NewGame;
             // Get["/game_info", true] = GameInfo;
             // Post["/submit_move", true] = SubmitMove;
@@ -39,16 +39,16 @@ namespace TrulyQuantumChess.WebApp {
             QuantumChessEngine engine = await WebAppManagers.DatabaseManager.RequestEngine(game_id);
 
             var response = new Model.InfoResponse();
-            response.ActivePlayer = PlayerUtils.PlayerToString(engine.ActivePlayer);
-            response.GameState = GameStateUtils.GameStateToString(engine.GameState);
+            response.ActivePlayer = PlayerUtils.ToString(engine.ActivePlayer);
+            response.GameState = GameStateUtils.ToString(engine.GameState);
             response.Squares = new Dictionary<String, Model.InfoResponse.SquareEncoded>();
             for (int i = 0; i < 64; i++) {
                 Position pos = Position.FromIndex(i);
-                QuantumPiece qpiece = engine.Chessboard.GetQuantumPiece(pos);
+                QuantumPiece qpiece = engine.QuantumChessboard.GetQuantumPiece(pos);
                 if (qpiece.Piece.HasValue) {
                     response.Squares[pos.ToString()] = new Model.InfoResponse.SquareEncoded() {
-                        Player = PlayerUtils.PlayerToString(qpiece.Piece.Value.Player),
-                        Piece = PieceTypeUtils.PieceTypeToString(qpiece.Piece.Value.PieceType),
+                        Player = PlayerUtils.ToString(qpiece.Piece.Value.Player),
+                        Piece = PieceTypeUtils.ToString(qpiece.Piece.Value.PieceType),
                         Probability = qpiece.Probability
                     };
                 } else {

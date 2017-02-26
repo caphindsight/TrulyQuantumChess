@@ -17,7 +17,7 @@ namespace TrulyQuantumChess.Vanilla {
 
             var engine = new QuantumChessEngine();
             for (;;) {
-                Output.DisplayQuantumChessboard(engine.Chessboard, cols);
+                Output.DisplayQuantumChessboard(engine.QuantumChessboard, cols);
                 Console.WriteLine();
 
                 for (;;) {

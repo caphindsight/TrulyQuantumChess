@@ -5,7 +5,7 @@
         "ConnectionString": "mongodb://localhost:32768",
         "Database": "truly_quantum_chess"
     },
-    "CleanAfterHours": 0.5,
+    "CleanAfterHours": 2,
     "Debug": true,
     "Pieces": {
         "Collection": "simple",

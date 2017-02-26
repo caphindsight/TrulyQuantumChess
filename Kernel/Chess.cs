@@ -21,11 +21,19 @@ namespace TrulyQuantumChess.Kernel.Chess {
             }
         }
 
-        public static string PlayerToString(Player player) {
+        public static string ToString(Player player) {
             switch (player) {
                 case Player.White: return "white";
                 case Player.Black: return "black";
                 default: throw new AssertionException($"Unsupported player: {player}");
+            }
+        }
+
+        public static Player FromString(string player) {
+            switch (player) {
+                case "white": return Player.White;
+                case "black": return Player.Black;
+                default: throw new AssertionException($"Unsupported player string: \"{player}\"");
             }
         }
     }
@@ -40,7 +48,7 @@ namespace TrulyQuantumChess.Kernel.Chess {
     }
 
     public static class PieceTypeUtils {
-        public static string PieceTypeToString(PieceType piece_type) {
+        public static string ToString(PieceType piece_type) {
             switch (piece_type) {
                 case PieceType.Pawn: return "pawn";
                 case PieceType.Knight: return "knight";
@@ -49,6 +57,18 @@ namespace TrulyQuantumChess.Kernel.Chess {
                 case PieceType.Queen: return "queen";
                 case PieceType.King: return "king";
                 default: throw new AssertionException($"Unsupported piece type: {piece_type}");
+            }
+        }
+
+        public static PieceType FromString(string piece_type) {
+            switch (piece_type) {
+                case "pawn": return PieceType.Pawn;
+                case "knight": return PieceType.Knight;
+                case "bishop": return PieceType.Bishop;
+                case "rook": return PieceType.Rook;
+                case "queen": return PieceType.Queen;
+                case "king": return PieceType.King;
+                default: throw new AssertionException($"Unsupported piece type string: \"{piece_type}\"");
             }
         }
     }
@@ -159,13 +179,23 @@ namespace TrulyQuantumChess.Kernel.Chess {
     }
 
     public static class GameStateUtils {
-        public static string GameStateToString(GameState game_state) {
+        public static string ToString(GameState game_state) {
             switch (game_state) {
                 case GameState.GameStillGoing: return "game_still_going";
                 case GameState.WhiteVictory: return "white_victory";
                 case GameState.BlackVictory: return "black_victory";
                 case GameState.Tie: return "tie";
                 default: throw new AssertionException($"Unsupported game state: {game_state}");
+            }
+        }
+
+        public static GameState FromString(string game_state) {
+            switch (game_state) {
+                case "game_still_going": return GameState.GameStillGoing;
+                case "white_victory": return GameState.WhiteVictory;
+                case "black_victory": return GameState.BlackVictory;
+                case "tie": return GameState.Tie;
+                default: throw new AssertionException($"Unsupported game state string: \"{game_state}\"");
             }
         }
     }
@@ -176,6 +206,12 @@ namespace TrulyQuantumChess.Kernel.Chess {
 
         public static Chessboard EmptyChessboard() {
             return new Chessboard();
+        }
+
+        public static Chessboard EmptyChessboard(GameState chessboard_state) {
+            var res = new Chessboard();
+            res.GameState_ = chessboard_state;
+            return res;
         }
 
         public static Chessboard StartingChessboard() {

@@ -11,13 +11,13 @@ namespace TrulyQuantumChess.WebApp {
                 try {
                     for (;;) {
                         try {
-                            // Games.Clean();
+                            WebAppManagers.DatabaseManager.CleanOldEntities(DateTime.UtcNow - TimeSpan.FromHours(WebAppConfig.Instance.CleanAfterHours)).Wait();
                         } catch (ThreadAbortException) {
                             throw;
                         } catch (Exception e) {
                             Console.WriteLine($"Error occured while cleaning: {e}");
                         }
-                        Thread.Sleep(TimeSpan.FromMinutes(5));
+                        Thread.Sleep(TimeSpan.FromMinutes(10));
                     }
                 } catch (ThreadAbortException) {}
             });

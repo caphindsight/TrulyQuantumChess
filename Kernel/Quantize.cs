@@ -53,6 +53,14 @@ namespace TrulyQuantumChess.Kernel.Quantize {
         private List<QuantumHarmonic> Harmonics_ = new List<QuantumHarmonic>();
         private GameState GameState_ = GameState.Tie;
 
+        public QuantumChessboard() {
+        }
+
+        public QuantumChessboard(List<QuantumHarmonic> harmonics, GameState gameState) {
+            Harmonics_ = harmonics;
+            GameState_ = gameState;
+        }
+
         public static QuantumChessboard StartingQuantumChessboard() {
             var res = new QuantumChessboard();
             res.GameState_ = GameState.GameStillGoing;
