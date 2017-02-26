@@ -15,13 +15,18 @@ namespace TrulyQuantumChess.WebApp {
         }
 
         private dynamic Index(dynamic args) {
-            return View["Index.sshtml", new { WebAppConfig.Instance.Prefix, WebAppConfig.Instance.DocUrl }];
+            return View["Index.sshtml", new {
+                WebAppConfig.Instance.Prefix,
+                WebAppConfig.Instance.DocUrl,
+                PageTitle = "Truly Quantum Chess",
+            }];
         }
 
         private dynamic Play(dynamic args) {
             var model = new {
                 WebAppConfig.Instance.Prefix,
                 GameId = Request.Query["gameId"],
+                PageTitle = "Game #" + Request.Query["gameId"],
                 PiecesCollection = WebAppConfig.Instance.Pieces.Collection,
                 PawnWidthRatio = WebAppConfig.Instance.Pieces.WidthRatios.Pawn,
                 KnightWidthRatio = WebAppConfig.Instance.Pieces.WidthRatios.Knight,
@@ -36,6 +41,7 @@ namespace TrulyQuantumChess.WebApp {
         private async Task<dynamic> ActiveGames(dynamic args, CancellationToken cancellation_token) {
             var model = new {
                 WebAppConfig.Instance.Prefix,
+                PageTitle = "Active games",
                 GameIds = await WebAppManagers.DatabaseManager.RequestActiveGames()
             };
             return View["ActiveGames.sshtml", model];

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 	<head>
-		<title>Truly Quantum Chess</title>
+		<title>@Model.PageTitle</title>
 		<meta name="keywords" content="quantum,chess" />
 		<meta name="author" content="Cap. Hindsight &lt;hindsight@yandex.ru&gt;" />
 		<meta charset="utf8" />
