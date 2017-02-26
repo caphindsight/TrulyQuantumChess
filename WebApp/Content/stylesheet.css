@@ -22,10 +22,11 @@
 }
 
 .chessboard-container {
-    padding-top: 50px;
+    padding-top: 10px;
 }
 
 table.chessboard {
+    border: 2px solid black;
     border-collapse: collapse;
     table-layout: fixed;
     width: 320px;
@@ -41,6 +42,16 @@ table.chessboard td {
     height: 40px;
     padding: 0px;
     margin: 0px;
+}
+
+table.chessboard td.coord {
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    vertical-align: middle;
 }
 
 table.chessboard td canvas {

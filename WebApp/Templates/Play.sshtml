@@ -27,9 +27,22 @@
 		<strong>active player: <span id="active_player">-</span></strong>
 		<br>
 		<span id="error_message" class="red"></span>
-		<br> <br>
+		<br>
 		<table class="chessboard">
 			<tr>
+				<td class="coord"></td>
+				<td class="coord">a</td>
+				<td class="coord">b</td>
+				<td class="coord">c</td>
+				<td class="coord">d</td>
+				<td class="coord">e</td>
+				<td class="coord">f</td>
+				<td class="coord">g</td>
+				<td class="coord">h</td>
+				<td class="coord"></td>
+			</tr>
+			<tr>
+				<td class="coord">8</td>
 				<td> <canvas id="sq-a8" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-b8" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-c8" class="square-white"></canvas> </td>
@@ -38,8 +51,10 @@
 				<td> <canvas id="sq-f8" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-g8" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-h8" class="square-black"></canvas> </td>
+				<td class="coord">8</td>
 			</tr>
 			<tr>
+				<td class="coord">7</td>
 				<td> <canvas id="sq-a7" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-b7" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-c7" class="square-black"></canvas> </td>
@@ -48,8 +63,10 @@
 				<td> <canvas id="sq-f7" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-g7" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-h7" class="square-white"></canvas> </td>
+				<td class="coord">7</td>
 			</tr>
 			<tr>
+				<td class="coord">6</td>
 				<td> <canvas id="sq-a6" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-b6" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-c6" class="square-white"></canvas> </td>
@@ -58,8 +75,10 @@
 				<td> <canvas id="sq-f6" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-g6" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-h6" class="square-black"></canvas> </td>
+				<td class="coord">6</td>
 			</tr>
 			<tr>
+				<td class="coord">5</td>
 				<td> <canvas id="sq-a5" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-b5" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-c5" class="square-black"></canvas> </td>
@@ -68,8 +87,10 @@
 				<td> <canvas id="sq-f5" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-g5" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-h5" class="square-white"></canvas> </td>
+				<td class="coord">5</td>
 			</tr>
 			<tr>
+				<td class="coord">4</td>
 				<td> <canvas id="sq-a4" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-b4" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-c4" class="square-white"></canvas> </td>
@@ -78,8 +99,10 @@
 				<td> <canvas id="sq-f4" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-g4" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-h4" class="square-black"></canvas> </td>
+				<td class="coord">4</td>
 			</tr>
 			<tr>
+				<td class="coord">3</td>
 				<td> <canvas id="sq-a3" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-b3" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-c3" class="square-black"></canvas> </td>
@@ -88,8 +111,10 @@
 				<td> <canvas id="sq-f3" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-g3" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-h3" class="square-white"></canvas> </td>
+				<td class="coord">3</td>
 			</tr>
 			<tr>
+				<td class="coord">2</td>
 				<td> <canvas id="sq-a2" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-b2" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-c2" class="square-white"></canvas> </td>
@@ -98,8 +123,10 @@
 				<td> <canvas id="sq-f2" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-g2" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-h2" class="square-black"></canvas> </td>
+				<td class="coord">2</td>
 			</tr>
 			<tr>
+				<td class="coord">1</td>
 				<td> <canvas id="sq-a1" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-b1" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-c1" class="square-black"></canvas> </td>
@@ -108,6 +135,19 @@
 				<td> <canvas id="sq-f1" class="square-white"></canvas> </td>
 				<td> <canvas id="sq-g1" class="square-black"></canvas> </td>
 				<td> <canvas id="sq-h1" class="square-white"></canvas> </td>
+				<td class="coord">1</td>
+			</tr>
+			<tr>
+				<td class="coord"></td>
+				<td class="coord">a</td>
+				<td class="coord">b</td>
+				<td class="coord">c</td>
+				<td class="coord">d</td>
+				<td class="coord">e</td>
+				<td class="coord">f</td>
+				<td class="coord">g</td>
+				<td class="coord">h</td>
+				<td class="coord"></td>
 			</tr>
 		</table>
 		<br>

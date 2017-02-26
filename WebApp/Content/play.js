@@ -124,12 +124,12 @@ function update_chessboard() {
             } else {
                 message = "Unknown game state: " + data.gameState;
             }
-            $("#game_state").html("<h1>" + message + "</h1>");
+            $("#game_state").html("<h2>" + message + "</h2>");
             $("#new_game").show();
         }
         $("#active_player").text(data.activePlayer);
         for (var pos in data.squares) {
-            if (!squares_equal(prev_chessboard.squares[pos], data.squares[pos]))
+            if (prev_chessboard == null || !squares_equal(prev_chessboard.squares[pos], data.squares[pos]))
                 draw($("#sq-" + pos)[0], data.squares[pos]);
         }
         prev_chessboard = data;
