@@ -11,6 +11,11 @@
     text-align: center;
 }
 
+.tip {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
 .center-of-screen {
     height: 34px;
     width: 150px;

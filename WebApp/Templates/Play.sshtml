@@ -150,6 +150,7 @@
 				<td class="coord"></td>
 			</tr>
 		</table>
+		<span class="tip">Tap two times on the same piece to make a quantum move</span>
 		<br>
 		<button id="capitulate_btn" class="btn btn-default">Capitulate</button>
 		<button id="castle_left_btn" class="btn btn-default">Left castle</button>
