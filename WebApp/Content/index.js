@@ -2,6 +2,7 @@
 
 function captcha_callback(captcha_response) {
     g_captcha_response = captcha_response;
+    $("#launch_new_game_btn").prop("disabled", false);
 }
 
 $(function() {
