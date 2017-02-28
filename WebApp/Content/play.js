@@ -15,6 +15,7 @@ function reset_move() {
 }
 
 var prev_chessboard = null;
+var active_player = null;
 
 function squares_equal(a, b) {
     if (a == null && b == null) {
@@ -100,6 +101,7 @@ function update_chessboard() {
             $("#game_state").html("<h2>" + message + "</h2>");
             $("#new_game").show();
         }
+        active_player = data.activePlayer;
         $("#active_player").text(data.activePlayer);
         for (var pos in data.squares) {
             var pos_in_last_move = false;
@@ -136,6 +138,10 @@ $(function() {
 
                 if (move.source == "") {
                     // Selecting source square
+                    if (prev_chessboard == null || prev_chessboard.squares[pos].player != active_player) {
+                        $("#error_message").text("Active player is " + active_player + "!");
+                        return;
+                    }
                     move.move_type = "ordinary";
                     move.source = pos;
                     $elem.addClass("square-selected");
