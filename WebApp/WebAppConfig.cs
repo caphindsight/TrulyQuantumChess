@@ -23,6 +23,7 @@ namespace TrulyQuantumChess.WebApp {
         public bool Debug { get; private set; }
         public PiecesInfo Pieces { get; private set; }
         public string DocUrl { get; private set; }
+        public CaptchaSettings Captcha { get; private set; }
     }
 
     // Helper for dependency injections
@@ -52,5 +53,11 @@ namespace TrulyQuantumChess.WebApp {
         public double Rook { get; private set; }
         public double Queen { get; private set; }
         public double King { get; private set; }
+    }
+
+    public class CaptchaSettings {
+        public bool Enabled { get; private set; }
+        public string Public { get; private set; }
+        public string Secret { get; private set; }
     }
 }

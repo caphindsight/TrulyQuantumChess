@@ -2,13 +2,35 @@
 
 @Section['Head']
 	<script src="@Model.Prefix/content/index.js"></script>
+	@If.CaptchaEnabled
+		<script src='https://www.google.com/recaptcha/api.js'></script>
+	@EndIf
 @EndSection
 
 @Section['Body']
 	<div class="centered">
 		<img src="@Model.Prefix/content/logo.png"></img>
 		<br><br>
-		<button id="play_btn" class="btn btn-primary">Play with friend</button>
+		<button id="play_btn" class="btn btn-primary" data-toggle="modal" data-target="#play_modal">Play with friend</button>
 		<a target="_blank" href="@Model.DocUrl" class="btn btn-default">Rules of quantum chess</a>
+	</div>
+	<div class="modal fade" id="play_modal" tabindex="-1" role="dialog" aria-labelledby="play_modal_title">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="play_modal_title">Play with friend</h4>
+				</div>
+				<div class="modal-body">
+					@If.CaptchaEnabled
+						<div class="g-recaptcha" data-sitekey="@Model.CaptchaCode" data-callback="captcha_callback"></div>
+					@EndIf
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary" id="launch_new_game_btn">Launch new game</button>
+				</div>
+			</div>
+		</div>
 	</div>
 @EndSection

@@ -18,6 +18,8 @@ namespace TrulyQuantumChess.WebApp {
             return View["Index.sshtml", new {
                 WebAppConfig.Instance.Prefix,
                 WebAppConfig.Instance.DocUrl,
+                CaptchaEnabled = WebAppConfig.Instance.Captcha.Enabled,
+                CaptchaCode = WebAppConfig.Instance.Captcha.Public,
                 PageTitle = "Truly Quantum Chess",
             }];
         }

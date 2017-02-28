@@ -1,6 +1,6 @@
 ﻿{
     "ListenUrl" : "http://localhost:9000",
-    "Prefix": "/truly-quantum-chess",
+    "Prefix": "",
     "Mongo": {
         "ConnectionString": "mongodb://localhost:32768",
         "Database": "truly_quantum_chess"
@@ -18,5 +18,10 @@
             "King": 0.83
         }
     },
-    "DocUrl": "https://github.com/caphindsight/TrulyQuantumChess/wiki"
+    "DocUrl": "https://github.com/caphindsight/TrulyQuantumChess/wiki",
+    "Captcha": {
+        "Enabled": true,
+        "Public": "6Lf-LhcUAAAAAG11TNlD8rqnjhOW9WuUpfVy1qfL",
+        "Secret": "6Lf-LhcUAAAAAEU_QLMfIJ94eqLpnFXc-qfyz-Jl"
+    }
 }

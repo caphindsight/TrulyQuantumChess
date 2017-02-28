@@ -21,7 +21,7 @@
 		<span id="game_state">Copy the URL of this page and send it to your friend</span>
 		<br>
 		<div id="new_game" hidden="true">
-			<a href="@Model.Prefix" class="btn btn-default">New game</a>
+			<a href="@Model.Prefix/" class="btn btn-default">New game</a>
 			<br> <br>
 		</div>
 		<strong>active player: <span id="active_player">-</span></strong>
