@@ -355,12 +355,12 @@ namespace TrulyQuantumChess.Kernel.Chess {
                     switch (piece.Player) {
                         case Player.White:
                             if (!capture)
-                                return source.X == target.X && (source.Y + 1 == target.Y || source.Y == 1 && target.Y == 3);
+                                return source.X == target.X && (source.Y + 1 == target.Y || source.Y == 1 && target.Y == 3 && this[source.X, 2] == null);
                             else
                                 return (source.X == target.X + 1 || source.X + 1 == target.X) && source.Y + 1 == target.Y;
                         case Player.Black:
                             if (!capture)
-                                return source.X == target.X && (source.Y - 1 == target.Y || source.Y == 6 && target.Y == 4);
+                                return source.X == target.X && (source.Y - 1 == target.Y || source.Y == 6 && target.Y == 4 && this[source.X, 5] == null);
                             else
                                 return (source.X == target.X + 1 || source.X + 1 == target.X) && source.Y - 1 == target.Y;
                         default:
