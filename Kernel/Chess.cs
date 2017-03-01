@@ -549,10 +549,10 @@ namespace TrulyQuantumChess.Kernel.Chess {
                     this[4, c] == new Piece(move.ActorPlayer, PieceType.King);
 
                 case CastleType.Right: return
-                    this[4, 0] == new Piece(move.ActorPlayer, PieceType.King) &&
-                    this[5, 0] == null &&
-                    this[6, 0] == null &&
-                    this[7, 0] == new Piece(move.ActorPlayer, PieceType.Rook);
+                    this[4, c] == new Piece(move.ActorPlayer, PieceType.King) &&
+                    this[5, c] == null &&
+                    this[6, c] == null &&
+                    this[7, c] == new Piece(move.ActorPlayer, PieceType.Rook);
 
                 default:
                     throw new AssertionException($"Unsupported castle type: {move.CastleType}");
