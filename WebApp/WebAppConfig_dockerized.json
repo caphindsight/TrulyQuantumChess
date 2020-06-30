@@ -20,7 +20,7 @@
     },
     "DocUrl": "https://github.com/caphindsight/TrulyQuantumChess/wiki",
     "Captcha": {
-        "Enabled": true,
+        "Enabled": false,
         "Public": "6LdUlikTAAAAANmAPmncAzWMV20RlVlZOlbhi7R7",
         "Secret": "6LdUlikTAAAAAFnV06iD6MPauLtede0IbWTgyRQN"
     }
