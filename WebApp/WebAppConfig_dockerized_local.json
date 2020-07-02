@@ -1,0 +1,27 @@
+﻿{
+    "ListenUrl" : "http://localhost:9000",
+    "Prefix": "",
+    "Mongo": {
+        "ConnectionString": "mongodb://mongo:27017",
+        "Database": "truly_quantum_chess"
+    },
+    "CleanAfterHours": 2,
+    "Debug": true,
+    "Pieces": {
+        "Collection": "simple",
+        "WidthRatios": {
+            "Pawn": 0.59,
+            "Knight": 0.78,
+            "Bishop": 0.82,
+            "Rook": 0.69,
+            "Queen": 0.93,
+            "King": 0.83
+        }
+    },
+    "DocUrl": "https://github.com/caphindsight/TrulyQuantumChess/wiki",
+    "Captcha": {
+        "Enabled": false,
+        "Public": "6LdUlikTAAAAANmAPmncAzWMV20RlVlZOlbhi7R7",
+        "Secret": "6LdUlikTAAAAAFnV06iD6MPauLtede0IbWTgyRQN"
+    }
+}
