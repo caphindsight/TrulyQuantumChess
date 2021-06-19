@@ -3,6 +3,8 @@ A game of truly quantum chess, with interference, entanglement, etc.
 
 You can play online in your browser on https://truly-quantum-chess.sloppy.zone.
 
+There is also a mirror of the game on https://quantum-chess.mateowang.dev if the above link is down.
+
 Alternatively, download, build & run your local mongodb and webapp server. To do so simply run:
 ```
 docker-compose build
